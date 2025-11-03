@@ -1,3 +1,4 @@
+
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/sec_filing.dart';
@@ -5,6 +6,7 @@ import '../models/sec_filing.dart';
 class SecForm4JsonService {
   static const String baseUrl = 'https://data.sec.gov/submissions/';
 
+  /// Fetches Form 4 filings for a given CIK
   static Future<List<SecFiling>> fetchForm4Filings(String cik) async {
     final url = Uri.parse('$baseUrl' + 'CIK$cik.json');
     final response = await http.get(url);
@@ -29,4 +31,3 @@ class SecForm4JsonService {
     }
   }
 }
-
