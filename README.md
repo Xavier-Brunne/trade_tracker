@@ -22,7 +22,6 @@ The app opens to a dashboard-style home screen with quick access to key features
 ---
 
 ## 🔌 SEC Form 4 Integration
-
 We use the official SEC RSS feed to fetch the latest Form 4 filings:
 
 - Source: [SEC Form 4 RSS Feed](https://www.sec.gov/)
@@ -49,7 +48,6 @@ Originally, the app used the SEC EDGAR JSON API (`https://data.sec.gov/submissio
   - 🟨 Yellow: Normal filings
   - 🟩 Green: High-interest (large trades or executive roles)
 - Clickable links to view more details
-
 ### 📦 Offline Storage & Backup
 - Local storage using Hive
 - Export data to `.zip` file
@@ -68,7 +66,6 @@ Originally, the app used the SEC EDGAR JSON API (`https://data.sec.gov/submissio
 - Monitor live prices via API
 - Push notifications when thresholds are crossed
 - Watchlist screen with current status and quick actions
-
 ### 🔔 Notifications
 - Daily reminder to check filings
 - Price alerts for watchlist items
@@ -127,10 +124,38 @@ Screenshots and design mockups will be added here as development progresses.
 - AI-powered prioritization
 - Auto-watchlist suggestions
 - Sentiment analysis and trend prediction
+---
+
+## 🎨 UI/UX Design Goals
+
+TradeTracker is designed with simplicity and clarity in mind. Our goals include:
+
+- Minimalist dashboard layout for quick access to key features
+- Clear visual hierarchy to guide user attention
+- Responsive design for mobile devices
+- Color-coded indicators for filing priority and alerts
+- Smooth navigation between screens with consistent styling
+
+---
+
+## 🔁 User Flow Overview
+
+1. **App Launch** → Dashboard Home Screen  
+2. **Tap “Fetch Latest Filings”** → View SEC Form 4 list  
+3. **Tap Filing Entry** → Open filing details (planned)  
+4. **Navigate to Holdings** → View tracked assets and charts  
+5. **Access Watchlist** → Monitor prices and receive alerts  
+
+---
+
+## 🖼️ Dashboard Screenshot or Wireframe
+
+*Placeholder for future screenshot or wireframe of the dashboard layout.*
 
 ---
 
 ## 📦 Project Structure
+
 
 ib/
 ├── services/
