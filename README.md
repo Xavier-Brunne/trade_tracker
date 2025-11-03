@@ -1,12 +1,41 @@
+
 # 📊 TradeTracker
 
-TradeTracker is a mobile app designed to help users monitor insider trading activity, track personal investments, and stay informed about market movements — all in one place.
+TradeTracker is a Flutter mobile app designed to help users monitor insider trading activity, track personal investments, and stay informed about market movements — all in one place.
 
 ---
 
 ## 🚀 Project Overview
 
 TradeTracker fetches SEC Form 4 filings daily, highlights high-interest trades, and allows users to track their own investments with customizable alerts. It combines real-time data, offline storage, and smart automation to deliver a powerful insider trading companion.
+
+---
+
+## 🏠 Dashboard Home Screen
+
+The app opens to a dashboard-style home screen with quick access to key features:
+
+- 📊 **Your Current Holdings**: Displays a summary of tracked assets (planned feature).
+- 📰 **Latest SEC Filings**: Fetches recent Form 4 insider trading filings from the SEC RSS feed.
+- 📈 **Charts and Trends**: Visualizes holdings and market data (planned feature).
+
+---
+
+## 🔌 SEC Form 4 Integration
+
+We use the official SEC RSS feed to fetch the latest Form 4 filings:
+
+- Source: [SEC Form 4 RSS Feed](https://www.sec.gov/)
+- Parsed using Dart's `http` and `xml` packages
+- Displayed in a scrollable list with filing titles and timestamps
+
+### 🔄 Why RSS Feed?
+
+Originally, the app used the SEC EDGAR JSON API (`https://data.sec.gov/submissions/CIK##########.json`) to fetch filings by CIK. However, due to network restrictions and reliability issues, we switched to the SEC's public RSS feed, which:
+
+- Requires no authentication
+- Works reliably across all platforms
+- Provides real-time access to Form 4 filings
 
 ---
 
@@ -23,8 +52,8 @@ TradeTracker fetches SEC Form 4 filings daily, highlights high-interest trades, 
 
 ### 📦 Offline Storage & Backup
 - Local storage using Hive
-- Export data to .zip file
-- Import from backup .zip
+- Export data to `.zip` file
+- Import from backup `.zip`
 
 ### 📱 User Interface
 - Home screen with “Fetch Today’s Filings” button
@@ -52,10 +81,7 @@ TradeTracker fetches SEC Form 4 filings daily, highlights high-interest trades, 
 - Sideload via ADB
 - Share APKs privately (e.g., Google Drive, Signal)
 
----
-
-## 🤖 Smart Automation & Intelligence Features
-
+### 🤖 Smart Automation & Intelligence Features
 - **AI-Powered Filing Prioritization**: Score filings based on keywords, roles, and trade amounts
 - **Auto-Watchlist Suggestions**: Suggest adding stocks based on high-interest filings
 - **Scheduled Background Fetching**: Automatically fetch filings and check watchlist prices daily
@@ -81,7 +107,7 @@ TradeTracker fetches SEC Form 4 filings daily, highlights high-interest trades, 
 
 ## 🖼️ UI Mockups (Placeholder)
 
-> Screenshots and design mockups will be added here as development progresses.
+Screenshots and design mockups will be added here as development progresses.
 
 ---
 
@@ -104,9 +130,18 @@ TradeTracker fetches SEC Form 4 filings daily, highlights high-interest trades, 
 
 ---
 
-## 🤝 Contribution Guidelines
+## 📦 Project Structure
 
-> Contributions are welcome! Please fork the repo, create a feature branch, and submit a pull request. For major changes, open an issue first to discuss what you’d like to change.
+ib/
+├── services/
+│   └── sec_form4_rss_service.dart   # Fetches and parses SEC RSS feed
+├── screens/
+│   └── sec_form4_screen.dart        # UI for displaying Form 4 filings
+└── main.dart                        # Entry point with dashboard layout
 
 ---
+
+## 🤝 Contribution Guidelines
+
+Contributions are welcome! Please fork the repo, create a feature branch, and submit a pull request. For major changes, open an issue first to discuss what you’d like to change.
 
