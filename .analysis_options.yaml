@@ -1,0 +1,13 @@
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    prefer_const_constructors: true
+    avoid_print: true
+    always_declare_return_types: true
+    prefer_final_locals: true
+    unnecessary_this: true
+    sort_pub_dependencies: true
+    avoid_unnecessary_containers: true
+    use_key_in_widget_constructors: true
+    require_trailing_commas: true
