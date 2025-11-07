@@ -3,6 +3,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '../models/sec_filing.dart';
 import '../services/sec_form4_json_service.dart';
 import '../services/sec_form4_rss_service.dart';
+import '../services/mock_filing_generator.dart'; // ✅ add this
+import '../screens/filing_detail_screen.dart';
 
 class SecForm4Screen extends StatefulWidget {
   const SecForm4Screen({super.key});
@@ -80,6 +82,42 @@ class _SecForm4ScreenState extends State<SecForm4Screen> {
     }
   }
 
+  Future<void> _fetchByCik(String? cik) async {
+    if (cik == null || cik.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Missing CIK")),
+      );
+      return;
+    }
+
+    setState(() => isLoading = true);
+
+    try {
+      final newFilings = await SecForm4JsonService.fetchForm4Filings(cik);
+      for (final filing in newFilings) {
+        filingsBox.add(filing);
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Fetched filings for CIK $cik")),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error fetching CIK $cik: ${e.toString()}")),
+      );
+    } finally {
+      setState(() => isLoading = false);
+    }
+  }
+
+  void _openFilingDetail(SecFiling filing) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => FilingDetailScreen(filing: filing),
+      ),
+    );
+  }
+
   Widget sourceBadge(String source) {
     final isJson = source == 'json';
     return Container(
@@ -102,79 +140,73 @@ class _SecForm4ScreenState extends State<SecForm4Screen> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final filings = filingsBox.values.toList()
-      ..sort((a, b) => b.filingDate.compareTo(a.filingDate));
-
-    return Scaffold(
-      appBar: AppBar(title: const Text('Latest SEC Filings')),
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : filings.isEmpty
-              ? const Center(
-                  child: Text(
-                    "No filings available.\nTap a button below to fetch data.",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 16),
-                  ),
-                )
-              : ListView.builder(
-                  itemCount: filings.length,
-                  itemBuilder: (context, index) {
-                    final filing = filings[index];
-                    final isHighInterest = filing.isSaved;
-
-                    return Card(
-                      elevation: 2,
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8),
-                      color: isHighInterest
-                          ? Colors.green[100]
-                          : Colors.yellow[100],
-                      child: Stack(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 8, right: 8),
-                            child: ListTile(
-                              title: Text(filing.issuer,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              subtitle: Text(
-                                  "Filed: ${filing.filingDate} • Reported: ${filing.reportDate}"),
-                              trailing: Text(filing.accessionNumber),
-                              onTap: () {
-                                // TODO: Navigate to filing details
-                              },
-                            ),
-                          ),
-                          Positioned(
-                            top: 0,
-                            right: 0,
-                            child: sourceBadge(filing.source),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-      floatingActionButton: Column(
+  Widget _buildFilingTile(SecFiling filing) {
+    return ListTile(
+      leading: const Icon(Icons.article_outlined),
+      title: Text(filing.issuer), // ✅ use issuer field
+      subtitle: Text('Filed on ${filing.filingDate}'),
+      trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          FloatingActionButton.extended(
-            heroTag: 'json',
-            icon: const Icon(Icons.download),
-            label: const Text("Fetch by CIK"),
-            onPressed: _fetchJsonFilings,
-          ),
-          const SizedBox(height: 12),
-          FloatingActionButton.extended(
-            heroTag: 'rss',
-            icon: const Icon(Icons.rss_feed),
-            label: const Text("Fetch RSS Feed"),
-            onPressed: _autoFetchRss,
+          sourceBadge(filing.source),
+          const SizedBox(width: 8),
+          IconButton(
+            icon: const Icon(Icons.cloud_download),
+            tooltip: 'Fetch by CIK',
+            onPressed: () => _fetchByCik(filing.cik),
           ),
         ],
+      ),
+      onTap: () => _openFilingDetail(filing),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('SEC Form 4 Filings'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            tooltip: 'Fetch JSON Filings',
+            onPressed: _fetchJsonFilings,
+          ),
+          IconButton(
+            icon: const Icon(Icons.bug_report),
+            tooltip: 'Add Mock Filing',
+            onPressed: () {
+              final mock = MockFilingGenerator.generate();
+              filingsBox.add(mock);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text("✅ Added one mock filing")),
+              );
+            },
+          ),
+        ],
+      ),
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : ValueListenableBuilder(
+              valueListenable: filingsBox.listenable(),
+              builder: (context, Box<SecFiling> box, _) {
+                if (box.isEmpty) {
+                  return const Center(child: Text('No filings available.'));
+                }
+                return ListView.builder(
+                  itemCount: box.length,
+                  itemBuilder: (context, index) {
+                    final filing = box.getAt(index);
+                    if (filing == null) return const SizedBox.shrink();
+                    return _buildFilingTile(filing);
+                  },
+                );
+              },
+            ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: _autoFetchRss,
+        icon: const Icon(Icons.rss_feed),
+        label: const Text("Fetch RSS"),
       ),
     );
   }

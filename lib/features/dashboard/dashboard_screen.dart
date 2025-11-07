@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart'; // ✅ Needed for Box<Person>
+import 'package:hive_flutter/hive_flutter.dart';
 import '../../person.dart';
+import '../../models/sec_filing.dart';
 import '../../screens/sec_form4_screen.dart';
 import '../../services/hive_service.dart';
+import '../../services/mock_filing_generator.dart'; // ✅ corrected path
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -13,17 +15,27 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   late Box<Person> peopleBox;
+  late Box<SecFiling> secBox;
 
   @override
   void initState() {
     super.initState();
-    peopleBox = HiveService.getBox<Person>('people'); // ✅ Type-safe access
+    peopleBox = HiveService.getBox<Person>('people');
+    secBox = HiveService.getBox<SecFiling>('secFilings');
   }
 
   void _addPerson() {
     final newPerson = Person(name: 'Darren ${DateTime.now().second}');
     peopleBox.add(newPerson);
     setState(() {});
+  }
+
+  void _addMockFiling() {
+    final mock =
+        MockFilingGenerator.generate(issuer: 'Darren ${secBox.length + 1}');
+    secBox.add(mock);
+    setState(() {});
+    print('📄 Added mock filing: ${mock.issuer}');
   }
 
   Widget _secFilingsCard(BuildContext context) {
@@ -63,34 +75,55 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
+  Widget _secFilingsList() {
+    return ValueListenableBuilder(
+      valueListenable: secBox.listenable(),
+      builder: (context, Box<SecFiling> box, _) {
+        if (box.isEmpty) {
+          return const Center(child: Text('No filings yet.'));
+        }
+
+        return ListView.builder(
+          itemCount: box.length,
+          itemBuilder: (context, index) {
+            final filing = box.getAt(index);
+            if (filing == null) return const SizedBox.shrink();
+            return ListTile(
+              leading: const Icon(Icons.article),
+              title: Text(filing.issuer),
+              subtitle: Text('Filed on ${filing.filingDate}'),
+              trailing: Text(filing.source),
+            );
+          },
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final people = peopleBox.values.toList();
-
     return Scaffold(
       appBar: AppBar(title: const Text('Dashboard')),
       body: Column(
         children: [
           _secFilingsCard(context),
-          Expanded(
-            child: people.isEmpty
-                ? const Center(
-                    child: Text("No people added yet. Tap + to add one."))
-                : ListView.builder(
-                    itemCount: people.length,
-                    itemBuilder: (context, index) {
-                      final person = people[index];
-                      return ListTile(
-                        title: Text(person.name),
-                      );
-                    },
-                  ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Recent Filings',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+            ),
           ),
+          Expanded(child: _secFilingsList()),
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _addPerson,
+        onPressed: _addMockFiling,
         child: const Icon(Icons.add),
+        tooltip: 'Add mock SEC filing',
       ),
     );
   }

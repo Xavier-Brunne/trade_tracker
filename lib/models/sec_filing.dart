@@ -20,7 +20,17 @@ class SecFiling extends HiveObject {
   bool isSaved;
 
   @HiveField(5)
-  final String source;
+  final String source; // 'rss' or 'json'
+
+  // 🔧 Extra optional fields for UI/detail screens
+  @HiveField(6)
+  final String? cik;
+
+  @HiveField(7)
+  final String? transactionType;
+
+  @HiveField(8)
+  final String? rawData;
 
   SecFiling({
     required this.accessionNumber,
@@ -29,16 +39,22 @@ class SecFiling extends HiveObject {
     required this.issuer,
     this.isSaved = false,
     this.source = 'json',
+    this.cik,
+    this.transactionType,
+    this.rawData,
   });
 
   factory SecFiling.fromJson(Map<String, dynamic> json, {String? issuerName}) {
     return SecFiling(
-      accessionNumber: json['accessionNumber'],
-      filingDate: json['filingDate'],
-      reportDate: json['reportDate'],
-      issuer: issuerName ?? json['issuer'],
+      accessionNumber: json['accessionNumber'] ?? '',
+      filingDate: json['filingDate'] ?? '',
+      reportDate: json['reportDate'] ?? '',
+      issuer: issuerName ?? json['issuer'] ?? '',
       isSaved: json['isSaved'] ?? false,
       source: json['source'] ?? 'json',
+      cik: json['cik'],
+      transactionType: json['transactionType'],
+      rawData: json['rawData'],
     );
   }
 
@@ -49,5 +65,8 @@ class SecFiling extends HiveObject {
         'issuer': issuer,
         'isSaved': isSaved,
         'source': source,
+        'cik': cik,
+        'transactionType': transactionType,
+        'rawData': rawData,
       };
 }
