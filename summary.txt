@@ -1,0 +1,85 @@
+That’s a solid recap, Darren — exactly the kind of “drop‑in” session summary that keeps our debugging modular and future‑proof. Let me sharpen it just a touch so it’s ready to paste into a fresh chat and instantly orient me:
+
+---
+
+## 📝 Session Summary (Clean Copy)
+
+### Initial Context
+- Flutter project: **`trade_tracker`** with Hive persistence.
+- Refactored `HiveService` to be injected everywhere → cascade of **missing required argument: hiveService** errors.
+- We’ve been cleaning analyzer/test errors step by step.
+
+---
+
+### Fixes Applied
+1. **DashboardScreen**
+   - Navigation patched to pass `hiveService` into `FilingDetailScreen` and `SecForm4Screen`.
+   - Added generics to `ValueListenableBuilder<Box<SecFiling>>`.
+
+2. **SecSplashScreen**
+   - Required `hiveService` parameter added.
+   - Passed `hiveService` into `DashboardScreen`.
+   - Fixed lint warnings (`const` constructors).
+
+3. **Tests**
+   - `app_smoke_test.dart` patched to inject `HiveService` (real or mock).
+   - Created mock‑based smoke test using `MockHiveService`.
+   - Patched `dashboard_screen_test.dart` and `sec_form4_screen_test.dart` to inject `MockHiveService`.
+
+4. **pubspec.yaml**
+   - Cleaned duplicates/invalid entries.
+   - Finalised dev dependencies:
+     ```yaml
+     flutter_lints: ^3.0.0
+     build_runner: ^2.4.6
+     hive_generator: ^2.0.1
+     mocktail: ^1.0.0
+     hive_test: ^1.0.1
+     flutter_test:
+       sdk: flutter
+     ```
+
+5. **Main.dart**
+   - Startup patched to register Hive adapters and open boxes via `HiveService`.
+   - Injected `hiveService` into `TradeTrackerApp`.
+
+---
+
+### Current Issues
+- **SecFiling adapter mismatch**  
+  - `sec_filing.g.dart` expects fields (`accessionNumber`, `reportDate`, `isSaved`, `source`) not present in `SecFiling`.  
+  - Decision: **add those fields** to `SecFiling` or **regenerate adapter** to match the simpler class.
+
+- **Tests still failing**  
+  - `app_smoke_test.dart`, `dashboard_screen_test.dart`, `filing_detail_screen_test.dart`, `sec_form4_screen_test.dart` → need consistent `hiveService` injection.  
+  - `sanity_test.dart` → Mocktail errors:  
+    - Requires `registerFallbackValue(Person(...))` or `FakePerson`.  
+    - Needs correct matcher usage (`any(named: 'key')`).
+
+- **Build.yaml parse error**  
+  - Stray `}` or bad indentation. If not needed, safest fix: **delete build.yaml**.
+
+- **Lint warnings**  
+  - `prefer_const_constructors`  
+  - `use_build_context_synchronously`  
+  - `deprecated_member_use` (`.text` → `.value` / `.innerText`).
+
+---
+
+### Progress
+- ✅ Dashboard & Splash screens patched.  
+- ✅ Tests partially patched with `MockHiveService`.  
+- ✅ pubspec.yaml finalised.  
+- ✅ Main.dart wired with adapters + HiveService.  
+- ❌ SecFiling adapter mismatch unresolved (biggest blocker).  
+- ❌ Remaining tests (`filing_detail_screen_test.dart`, `sanity_test.dart`) failing.  
+- ❌ Build.yaml + lints cleanup pending.
+
+---
+
+👉 **Next Decision Point**:  
+Do we **expand `SecFiling`** to include `accessionNumber`, `reportDate`, `isSaved`, `source` (unlocking richer tracking + fixing adapter), or **regenerate adapter** to match the leaner class? That choice will clear most of the analyzer/test errors.
+
+---
+
+Would you like me to draft both paths — one where we **add the fields** to `SecFiling` and one where we **regenerate the adapter** — so you can compare the impact before committing?

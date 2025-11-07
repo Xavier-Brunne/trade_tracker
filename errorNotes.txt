@@ -1,0 +1,595 @@
+PS C:\Users\61421\trade_tracker> flutter pub run build_runner build --delete-conflicting-outputs
+>> flutter analyze
+>> flutter test
+>>
+Deprecated. Use `dart run` instead.
+[INFO] Generating build script completed, took 343ms
+[WARNING] Invalidated precompiled build script due to missing asset graph.
+[INFO] Precompiling build script... completed, took 756ms
+[SEVERE] Failed to parse `build.yaml` for trade_tracker.
+
+If you believe you have gotten this message in error, especially if using a new       
+feature, you may need to run `dart run build_runner clean` and then rebuild.
+
+Invalid argument(s): line 31, column 2 of build.yaml: Expected ':'.
+   ╷
+31 │ }
+   │  ^
+   ╵
+package:build_runner_core/src/package_graph/target_graph.dart 219:5  _packageBuildConfig
+package:build_runner_core/src/package_graph/target_graph.dart 67:11  TargetGraph.forPackageGraph
+package:build_runner_core/src/generate/options.dart 186:21           BuildOptions.create
+package:build_runner/src/generate/build.dart 94:17                   build
+package:build_runner/src/entrypoint/build.dart 35:18                 BuildCommand._runpackage:args/command_runner.dart 212:13                              CommandRunner.runCommand
+package:build_runner/src/entrypoint/run.dart 26:18                   run
+.dart_tool\build\entrypoint\build.dart 47:16                         main
+
+Analyzing trade_tracker...                                              
+
+   info - The imported package 'flutter_test' isn't a dependency of the importing     
+          package - lib\features\dashboard\dashboard_test.dart:1:8 -
+          depend_on_referenced_packages
+  error - The named parameter 'hiveService' is required, but there's no corresponding 
+         argument - lib\features\dashboard\dashboard_test.dart:7:35 -
+         missing_required_argument
+   info - Use 'const' with the constructor to improve performance -
+          lib\main.dart:19:23 - prefer_const_constructors
+  error - The named parameter 'formType' is required, but there's no corresponding    
+         argument - lib\models\sec_filing.g.dart:19:12 - missing_required_argument    
+  error - The named parameter 'id' is required, but there's no corresponding argument 
+         - lib\models\sec_filing.g.dart:19:12 - missing_required_argument
+  error - The named parameter 'accessionNumber' isn't defined -
+         lib\models\sec_filing.g.dart:20:7 - undefined_named_parameter
+  error - The named parameter 'reportDate' isn't defined -
+         lib\models\sec_filing.g.dart:22:7 - undefined_named_parameter
+  error - The named parameter 'isSaved' isn't defined -
+         lib\models\sec_filing.g.dart:24:7 - undefined_named_parameter
+  error - The named parameter 'source' isn't defined -
+         lib\models\sec_filing.g.dart:25:7 - undefined_named_parameter
+  error - The getter 'accessionNumber' isn't defined for the type 'SecFiling' -       
+         lib\models\sec_filing.g.dart:34:19 - undefined_getter
+  error - The getter 'reportDate' isn't defined for the type 'SecFiling' -
+         lib\models\sec_filing.g.dart:38:19 - undefined_getter
+  error - The getter 'isSaved' isn't defined for the type 'SecFiling' -
+         lib\models\sec_filing.g.dart:42:19 - undefined_getter
+  error - The getter 'source' isn't defined for the type 'SecFiling' -
+         lib\models\sec_filing.g.dart:44:19 - undefined_getter
+   info - Don't use 'BuildContext's across async gaps -
+          lib\screens\filing_detail_screen.dart:38:38 -
+          use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps -
+          lib\screens\sec_form4_screen.dart:38:26 - use_build_context_synchronously   
+   info - Don't use 'BuildContext's across async gaps -
+          lib\screens\sec_form4_screen.dart:42:19 - use_build_context_synchronously   
+  error - The named parameter 'formType' is required, but there's no corresponding    
+         argument - lib\services\mock_filing_generator.dart:8:20 -
+         missing_required_argument
+  error - The named parameter 'id' is required, but there's no corresponding argument 
+         - lib\services\mock_filing_generator.dart:8:20 - missing_required_argument   
+  error - The named parameter 'accessionNumber' isn't defined -
+         lib\services\mock_filing_generator.dart:9:7 - undefined_named_parameter      
+  error - The named parameter 'reportDate' isn't defined -
+         lib\services\mock_filing_generator.dart:11:7 - undefined_named_parameter     
+  error - The named parameter 'isSaved' isn't defined -
+         lib\services\mock_filing_generator.dart:13:7 - undefined_named_parameter     
+  error - The named parameter 'source' isn't defined -
+         lib\services\mock_filing_generator.dart:14:7 - undefined_named_parameter     
+  error - The named parameter 'formType' is required, but there's no corresponding    
+         argument - lib\services\sec_form4_json_service.dart:21:16 -
+         missing_required_argument
+  error - The named parameter 'id' is required, but there's no corresponding argument 
+         - lib\services\sec_form4_json_service.dart:21:16 - missing_required_argument 
+  error - The named parameter 'accessionNumber' isn't defined -
+         lib\services\sec_form4_json_service.dart:22:11 - undefined_named_parameter   
+  error - The named parameter 'reportDate' isn't defined -
+         lib\services\sec_form4_json_service.dart:24:11 - undefined_named_parameter   
+  error - The named parameter 'source' isn't defined -
+         lib\services\sec_form4_json_service.dart:26:11 - undefined_named_parameter   
+   info - 'text' is deprecated and shouldn't be used. Use [value] to access the       
+          textual content of this node, or [innerText] to access the textual content  
+          of its descendants - lib\services\sec_form4_rss_service.dart:20:47 -        
+          deprecated_member_use
+   info - 'text' is deprecated and shouldn't be used. Use [value] to access the       
+          textual content of this node, or [innerText] to access the textual content  
+          of its descendants - lib\services\sec_form4_rss_service.dart:21:51 -        
+          deprecated_member_use
+   info - 'text' is deprecated and shouldn't be used. Use [value] to access the       
+          textual content of this node, or [innerText] to access the textual content  
+          of its descendants - lib\services\sec_form4_rss_service.dart:22:45 -        
+          deprecated_member_use
+  error - The named parameter 'formType' is required, but there's no corresponding
+         argument - lib\services\sec_form4_rss_service.dart:27:14 -
+         missing_required_argument
+  error - The named parameter 'id' is required, but there's no corresponding argument 
+         - lib\services\sec_form4_rss_service.dart:27:14 - missing_required_argument  
+  error - The named parameter 'accessionNumber' isn't defined -
+         lib\services\sec_form4_rss_service.dart:28:9 - undefined_named_parameter     
+  error - The named parameter 'reportDate' isn't defined -
+         lib\services\sec_form4_rss_service.dart:30:9 - undefined_named_parameter     
+  error - The named parameter 'isSaved' isn't defined -
+         lib\services\sec_form4_rss_service.dart:32:9 - undefined_named_parameter     
+  error - The named parameter 'formType' is required, but there's no corresponding    
+         argument - lib\services\sec_form4_service.dart:21:16 -
+         missing_required_argument
+  error - The named parameter 'id' is required, but there's no corresponding argument 
+         - lib\services\sec_form4_service.dart:21:16 - missing_required_argument      
+  error - The named parameter 'accessionNumber' isn't defined -
+         lib\services\sec_form4_service.dart:22:11 - undefined_named_parameter        
+  error - The named parameter 'reportDate' isn't defined -
+         lib\services\sec_form4_service.dart:24:11 - undefined_named_parameter        
+  error - The named parameter 'hiveService' is required, but there's no corresponding 
+         argument - test\app_smoke_test.dart:29:35 - missing_required_argument        
+  error - The named parameter 'hiveService' is required, but there's no corresponding 
+         argument - test\dashboard_screen_test.dart:13:15 - missing_required_argument 
+  error - The method 'listenable' isn't defined for the type 'MockBox' -
+         test\widget_test.dart:16:24 - undefined_method
+
+42 issues found. (ran in 1.9s)
+00:01 +0: loading C:/Users/61421/trade_tracker/test/app_smoke_test.dart              test/app_smoke_test.dart:29:50: Error: Required named parameter 'hiveService' must be  
+provided.
+    await tester.pumpWidget(const TradeTrackerApp());
+                                                 ^
+lib/main.dart:29:9: Context: Found this candidate, but the arguments don't match.     
+  const TradeTrackerApp({super.key, required this.hiveService});
+        ^^^^^^^^^^^^^^^
+lib/models/sec_filing.g.dart:20:7: Error: No named parameter with the name
+'accessionNumber'.
+      accessionNumber: fields[0] as String,
+      ^^^^^^^^^^^^^^^
+lib/models/sec_filing.dart:19:3: Context: Found this candidate, but the arguments     
+don't match.
+  SecFiling({
+  ^^^^^^^^^
+lib/models/sec_filing.g.dart:34:19: Error: The getter 'accessionNumber' isn't defined 
+for the class 'SecFiling'.
+ - 'SecFiling' is from 'package:trade_tracker/models/sec_filing.dart'
+ ('lib/models/sec_filing.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or    
+field named 'accessionNumber'.
+      ..write(obj.accessionNumber)
+                  ^^^^^^^^^^^^^^^
+lib/models/sec_filing.g.dart:38:19: Error: The getter 'reportDate' isn't defined for  
+the class 'SecFiling'.
+ - 'SecFiling' is from 'package:trade_tracker/models/sec_filing.dart'
+ ('lib/models/sec_filing.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or
+field named 'reportDate'.
+      ..write(obj.reportDate)
+                  ^^^^^^^^^^
+lib/models/sec_filing.g.dart:42:19: Error: The getter 'isSaved' isn't defined for the 
+class 'SecFiling'.
+ - 'SecFiling' is from 'package:trade_tracker/models/sec_filing.dart'
+ ('lib/models/sec_filing.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or    
+field named 'isSaved'.
+      ..write(obj.isSaved)
+                  ^^^^^^^
+lib/models/sec_filing.g.dart:44:19: Error: The getter 'source' isn't defined for the  
+class 'SecFiling'.
+ - 'SecFiling' is from 'package:trade_tracker/models/sec_filing.dart'
+ ('lib/models/sec_filing.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or    
+field named 'source'.
+      ..write(obj.source);
+                  ^^^^^^
+lib/services/mock_filing_generator.dart:9:7: Error: No named parameter with the name  
+'accessionNumber'.
+      accessionNumber: 'ACC-${DateTime.now().millisecondsSinceEpoch}',
+      ^^^^^^^^^^^^^^^
+lib/models/sec_filing.dart:19:3: Context: Found this candidate, but the arguments     
+don't match.
+  SecFiling({
+  ^^^^^^^^^
+00:01 +0 -1: loading C:/Users/61421/trade_tracker/test/app_smoke_test.dart [E]       
+  Failed to load "C:/Users/61421/trade_tracker/test/app_smoke_test.dart": Compilation 
+failed for testPath=C:/Users/61421/trade_tracker/test/app_smoke_test.dart
+
+To run this test again: C:\Users\61421\flutter\bin\cache\dart-sdk\bin\dart.exe test C:/Users/61421/trade_tracker/test/app_smoke_test.dart -p vm --plain-name "loading C:/Users/61421/trade_tracker/test/app_smoke_test.dart"
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 10:3  throwToolExit
+  package:flutter_tools/src/compile.dart 898:9     DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1407:47                     _rootRunUnary
+  dart:async/zone.dart 1308:19                     _CustomZone.runUnary
+  dart:async/future_impl.dart 847:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 876:13               Future._propagateToListeners       
+  dart:async/future_impl.dart 772:9                Future._propagateToListeners       
+  dart:async/future_impl.dart 652:5                Future._completeWithValue
+  dart:async/future_impl.dart 722:7                Future._asyncCompleteWithValue.<fn>  dart:async/zone.dart 1399:13                     _rootRun
+  dart:async/zone.dart 1301:19                     _CustomZone.run
+  dart:async/zone.dart 1209:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1249:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 118:13     _runPendingImmediateCallback       
+  dart:isolate-patch/isolate_patch.dart 185:5      _RawReceivePort._handleMessage     
+
+test/dashboard_screen_test.dart:13:30: Error: Required named parameter 'hiveService'
+must be provided.
+        home: DashboardScreen(),
+                             ^
+lib/features/dashboard/dashboard_screen.dart:13:9: Context: Found this candidate, but 
+the arguments don't match.
+  const DashboardScreen({super.key, required this.hiveService});
+        ^^^^^^^^^^^^^^^
+lib/models/sec_filing.g.dart:20:7: Error: No named parameter with the name
+'accessionNumber'.
+      accessionNumber: fields[0] as String,
+      ^^^^^^^^^^^^^^^
+lib/models/sec_filing.dart:19:3: Context: Found this candidate, but the arguments     
+don't match.
+  SecFiling({
+  ^^^^^^^^^
+lib/models/sec_filing.g.dart:34:19: Error: The getter 'accessionNumber' isn't defined 
+for the class 'SecFiling'.
+ - 'SecFiling' is from 'package:trade_tracker/models/sec_filing.dart'
+ ('lib/models/sec_filing.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or    
+field named 'accessionNumber'.
+      ..write(obj.accessionNumber)
+                  ^^^^^^^^^^^^^^^
+lib/models/sec_filing.g.dart:38:19: Error: The getter 'reportDate' isn't defined for  
+the class 'SecFiling'.
+ - 'SecFiling' is from 'package:trade_tracker/models/sec_filing.dart'
+ ('lib/models/sec_filing.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or    
+field named 'reportDate'.
+      ..write(obj.reportDate)
+                  ^^^^^^^^^^
+lib/models/sec_filing.g.dart:42:19: Error: The getter 'isSaved' isn't defined for the 
+class 'SecFiling'.
+ - 'SecFiling' is from 'package:trade_tracker/models/sec_filing.dart'
+ ('lib/models/sec_filing.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or    
+field named 'isSaved'.
+      ..write(obj.isSaved)
+                  ^^^^^^^
+lib/models/sec_filing.g.dart:44:19: Error: The getter 'source' isn't defined for the  
+class 'SecFiling'.
+ - 'SecFiling' is from 'package:trade_tracker/models/sec_filing.dart'
+ ('lib/models/sec_filing.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or    
+field named 'source'.
+      ..write(obj.source);
+                  ^^^^^^
+lib/services/mock_filing_generator.dart:9:7: Error: No named parameter with the name  
+'accessionNumber'.
+      accessionNumber: 'ACC-${DateTime.now().millisecondsSinceEpoch}',
+      ^^^^^^^^^^^^^^^
+lib/models/sec_filing.dart:19:3: Context: Found this candidate, but the arguments     
+don't match.
+  SecFiling({
+  ^^^^^^^^^
+00:02 +0 -2: loading C:/Users/61421/trade_tracker/test/dashboard_screen_test.dart [E]
+  Failed to load "C:/Users/61421/trade_tracker/test/dashboard_screen_test.dart": Compilation failed for testPath=C:/Users/61421/trade_tracker/test/dashboard_screen_test.dart
+
+To run this test again: C:\Users\61421\flutter\bin\cache\dart-sdk\bin\dart.exe test C:/Users/61421/trade_tracker/test/dashboard_screen_test.dart -p vm --plain-name "loading C:/Users/61421/trade_tracker/test/dashboard_screen_test.dart"
+00:02 +0 -2: loading C:/Users/61421/trade_tracker/test/app_smoke_test.dart [E]       
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 10:3  throwToolExit
+  package:flutter_tools/src/compile.dart 898:9     DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1407:47                     _rootRunUnary
+  dart:async/future_impl.dart 847:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 876:13               Future._propagateToListeners       
+  dart:async/future_impl.dart 772:9                Future._propagateToListeners       
+  dart:async/future_impl.dart 652:5                Future._completeWithValue
+  dart:async/future_impl.dart 722:7                Future._asyncCompleteWithValue.<fn>  dart:async/zone.dart 1399:13                     _rootRun
+  dart:async/zone.dart 1301:19                     _CustomZone.run
+  dart:async/zone.dart 1209:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1249:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 118:13     _runPendingImmediateCallback       
+  dart:isolate-patch/isolate_patch.dart 185:5      _RawReceivePort._handleMessage     
+
+lib/models/sec_filing.g.dart:20:7: Error: No named parameter with the name
+'accessionNumber'.
+      accessionNumber: fields[0] as String,
+      ^^^^^^^^^^^^^^^
+lib/models/sec_filing.dart:19:3: Context: Found this candidate, but the arguments     
+don't match.
+  SecFiling({
+  ^^^^^^^^^
+lib/models/sec_filing.g.dart:34:19: Error: The getter 'accessionNumber' isn't defined 
+for the class 'SecFiling'.
+ - 'SecFiling' is from 'package:trade_tracker/models/sec_filing.dart'
+ ('lib/models/sec_filing.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or    
+field named 'accessionNumber'.
+      ..write(obj.accessionNumber)
+                  ^^^^^^^^^^^^^^^
+lib/models/sec_filing.g.dart:38:19: Error: The getter 'reportDate' isn't defined for  
+the class 'SecFiling'.
+ - 'SecFiling' is from 'package:trade_tracker/models/sec_filing.dart'
+ ('lib/models/sec_filing.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or    
+field named 'reportDate'.
+      ..write(obj.reportDate)
+                  ^^^^^^^^^^
+lib/models/sec_filing.g.dart:42:19: Error: The getter 'isSaved' isn't defined for the 
+class 'SecFiling'.
+ - 'SecFiling' is from 'package:trade_tracker/models/sec_filing.dart'
+ ('lib/models/sec_filing.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or    
+field named 'isSaved'.
+      ..write(obj.isSaved)
+                  ^^^^^^^
+lib/models/sec_filing.g.dart:44:19: Error: The getter 'source' isn't defined for the  
+class 'SecFiling'.
+ - 'SecFiling' is from 'package:trade_tracker/models/sec_filing.dart'
+ ('lib/models/sec_filing.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or    
+field named 'source'.
+      ..write(obj.source);
+                  ^^^^^^
+00:03 +0 -3: loading C:/Users/61421/trade_tracker/test/filing_detail_screen_test.dart 
+[E]
+  Failed to load "C:/Users/61421/trade_tracker/test/filing_detail_screen_test.dart": Compilation failed for testPath=C:/Users/61421/trade_tracker/test/filing_detail_screen_test.dart
+
+To run this test again: C:\Users\61421\flutter\bin\cache\dart-sdk\bin\dart.exe test C:/Users/61421/trade_tracker/test/filing_detail_screen_test.dart -p vm --plain-name "loading C:/Users/61421/trade_tracker/test/filing_detail_screen_test.dart"
+00:03 +0 -3: loading C:/Users/61421/trade_tracker/test/app_smoke_test.dart [E]       
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 10:3  throwToolExit
+  package:flutter_tools/src/compile.dart 898:9     DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1407:47                     _rootRunUnary
+  dart:async/future_impl.dart 847:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 876:13               Future._propagateToListeners       
+  dart:async/future_impl.dart 772:9                Future._propagateToListeners       
+  dart:async/future_impl.dart 652:5                Future._completeWithValue
+  dart:async/future_impl.dart 722:7                Future._asyncCompleteWithValue.<fn>  dart:async/zone.dart 1399:13                     _rootRun
+  dart:async/zone.dart 1301:19                     _CustomZone.run
+  dart:async/zone.dart 1209:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1249:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 118:13     _runPendingImmediateCallback       
+  dart:isolate-patch/isolate_patch.dart 185:5      _RawReceivePort._handleMessage     
+
+lib/models/sec_filing.g.dart:20:7: Error: No named parameter with the name
+'accessionNumber'.
+      accessionNumber: fields[0] as String,
+      ^^^^^^^^^^^^^^^
+lib/models/sec_filing.dart:19:3: Context: Found this candidate, but the arguments     
+don't match.
+  SecFiling({
+  ^^^^^^^^^
+lib/models/sec_filing.g.dart:34:19: Error: The getter 'accessionNumber' isn't defined 
+for the class 'SecFiling'.
+ - 'SecFiling' is from 'package:trade_tracker/models/sec_filing.dart'
+ ('lib/models/sec_filing.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or    
+field named 'accessionNumber'.
+      ..write(obj.accessionNumber)
+                  ^^^^^^^^^^^^^^^
+lib/models/sec_filing.g.dart:38:19: Error: The getter 'reportDate' isn't defined for  
+the class 'SecFiling'.
+ - 'SecFiling' is from 'package:trade_tracker/models/sec_filing.dart'
+ ('lib/models/sec_filing.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or    
+field named 'reportDate'.
+      ..write(obj.reportDate)
+                  ^^^^^^^^^^
+lib/models/sec_filing.g.dart:42:19: Error: The getter 'isSaved' isn't defined for the 
+class 'SecFiling'.
+ - 'SecFiling' is from 'package:trade_tracker/models/sec_filing.dart'
+ ('lib/models/sec_filing.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or    
+field named 'isSaved'.
+      ..write(obj.isSaved)
+                  ^^^^^^^
+lib/models/sec_filing.g.dart:44:19: Error: The getter 'source' isn't defined for the  
+class 'SecFiling'.
+ - 'SecFiling' is from 'package:trade_tracker/models/sec_filing.dart'
+ ('lib/models/sec_filing.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or    
+field named 'source'.
+      ..write(obj.source);
+                  ^^^^^^
+00:04 +0 -4: loading C:/Users/61421/trade_tracker/test/sec_form4_screen_test.dart [E]
+  Failed to load "C:/Users/61421/trade_tracker/test/sec_form4_screen_test.dart": Compilation failed for testPath=C:/Users/61421/trade_tracker/test/sec_form4_screen_test.dart
+
+To run this test again: C:\Users\61421\flutter\bin\cache\dart-sdk\bin\dart.exe test C:/Users/61421/trade_tracker/test/sec_form4_screen_test.dart -p vm --plain-name "loading C:/Users/61421/trade_tracker/test/sec_form4_screen_test.dart"
+00:04 +0 -4: loading C:/Users/61421/trade_tracker/test/app_smoke_test.dart [E]       
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 10:3  throwToolExit
+  package:flutter_tools/src/compile.dart 898:9     DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1407:47                     _rootRunUnary
+  dart:async/future_impl.dart 847:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 876:13               Future._propagateToListeners       
+  dart:async/future_impl.dart 772:9                Future._propagateToListeners       
+  dart:async/future_impl.dart 652:5                Future._completeWithValue
+  dart:async/future_impl.dart 722:7                Future._asyncCompleteWithValue.<fn>  dart:async/zone.dart 1399:13                     _rootRun
+  dart:async/zone.dart 1301:19                     _CustomZone.run
+  dart:async/zone.dart 1209:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1249:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 118:13     _runPendingImmediateCallback       
+  dart:isolate-patch/isolate_patch.dart 185:5      _RawReceivePort._handleMessage     
+
+00:05 +0 -5: C:/Users/61421/trade_tracker/test/sanity_test.dart: MockHiveService returns mock box [E]
+  Bad state: A test tried to use `any` or `captureAny` on a parameter of type `Person`, but
+  registerFallbackValue was not previously called to register a fallback value for `Person`.
+
+  To fix, do:
+
+  ```
+  void main() {
+    setUpAll(() {
+      registerFallbackValue(/* create a dummy instance of `Person` */);
+    });
+  }
+  ```
+
+  This instance of `Person` will only be passed around, but never be interacted with. 
+  Therefore, if `Person` is a function, it does not have to return a valid object and 
+  could throw unconditionally.
+  If you cannot easily create an instance of `Person`, consider defining a `Fake`:    
+
+  ```
+  class MyTypeFake extends Fake implements MyType {}
+
+  void main() {
+    setUpAll(() {
+      registerFallbackValue(MyTypeFake());
+    });
+  }
+  ```
+
+  Fallbacks are required because mocktail has to know of a valid `Person` to prevent  
+  TypeErrors from being thrown in Dart's sound null safe mode, while still
+  providing a convenient syntax.
+
+  package:mocktail/src/_register_matcher.dart 49:5    _getFallbackValue
+  package:mocktail/src/_register_matcher.dart 160:25  _registerMatcher
+  package:mocktail/src/_register_matcher.dart 104:10  any
+  test\sanity_test.dart 16:35                         main.<fn>.<fn>
+  package:mocktail/src/mocktail.dart 211:9            when.<fn>
+  test\sanity_test.dart 16:9                          main.<fn>
+
+
+To run this test again: C:\Users\61421\flutter\bin\cache\dart-sdk\bin\dart.exe test C:/Users/61421/trade_tracker/test/sanity_test.dart -p vm --plain-name "MockHiveService returns mock box"
+00:05 +0 -6: C:/Users/61421/trade_tracker/test/sanity_test.dart: MockHiveService stores and retrieves Person [E]
+  Invalid argument(s): An argument matcher (like `any()`) was either not used as an immediate argument to Symbol("get") (argument matchers can only be used as an argument for the very method being stubbed or verified), or was used as a named argument without the Mocktail "named" API (Each argument matcher that is used as a named argument needs to specify the name of the argument it is being used in. For example: `when(() => obj.fn(x: any(named: "x")))`).
+  package:mocktail/src/_is_invocation.dart 252:7   _InvocationForMatchedArguments._reconstitutePositionalArgs
+  package:mocktail/src/_is_invocation.dart 126:33  new _InvocationForMatchedArguments 
+  package:mocktail/src/_is_invocation.dart 111:18  _useMatchedInvocationIfSet
+  package:mocktail/src/mocktail.dart 112:18        Mock.noSuchMethod
+  test\hive_mock.dart 5:7                          MockBox.get
+  test\sanity_test.dart 15:24                      main.<fn>.<fn>
+  package:mocktail/src/mocktail.dart 211:9         when.<fn>
+  test\sanity_test.dart 15:9                       main.<fn>
+
+
+To run this test again: C:\Users\61421\flutter\bin\cache\dart-sdk\bin\dart.exe test C:/Users/61421/trade_tracker/test/sanity_test.dart -p vm --plain-name "MockHiveService stores and retrieves Person"
+lib/models/sec_filing.g.dart:20:7: Error: No named parameter with the name
+'accessionNumber'.
+      accessionNumber: fields[0] as String,
+      ^^^^^^^^^^^^^^^
+lib/models/sec_filing.dart:19:3: Context: Found this candidate, but the arguments     
+don't match.
+  SecFiling({
+  ^^^^^^^^^
+lib/models/sec_filing.g.dart:34:19: Error: The getter 'accessionNumber' isn't defined 
+for the class 'SecFiling'.
+ - 'SecFiling' is from 'package:trade_tracker/models/sec_filing.dart'
+ ('lib/models/sec_filing.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or    
+field named 'accessionNumber'.
+      ..write(obj.accessionNumber)
+                  ^^^^^^^^^^^^^^^
+lib/models/sec_filing.g.dart:38:19: Error: The getter 'reportDate' isn't defined for  
+the class 'SecFiling'.
+ - 'SecFiling' is from 'package:trade_tracker/models/sec_filing.dart'
+ ('lib/models/sec_filing.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or    
+field named 'reportDate'.
+      ..write(obj.reportDate)
+                  ^^^^^^^^^^
+lib/models/sec_filing.g.dart:42:19: Error: The getter 'isSaved' isn't defined for the 
+class 'SecFiling'.
+ - 'SecFiling' is from 'package:trade_tracker/models/sec_filing.dart'
+ ('lib/models/sec_filing.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or    
+field named 'isSaved'.
+      ..write(obj.isSaved)
+                  ^^^^^^^
+lib/models/sec_filing.g.dart:44:19: Error: The getter 'source' isn't defined for the  
+class 'SecFiling'.
+ - 'SecFiling' is from 'package:trade_tracker/models/sec_filing.dart'
+ ('lib/models/sec_filing.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or    
+field named 'source'.
+      ..write(obj.source);
+                  ^^^^^^
+lib/services/mock_filing_generator.dart:9:7: Error: No named parameter with the name  
+'accessionNumber'.
+      accessionNumber: 'ACC-${DateTime.now().millisecondsSinceEpoch}',
+      ^^^^^^^^^^^^^^^
+lib/models/sec_filing.dart:19:3: Context: Found this candidate, but the arguments     
+don't match.
+  SecFiling({
+  ^^^^^^^^^
+00:05 +0 -7: loading C:/Users/61421/trade_tracker/test/sec_splash_screen_test.dart [E]  Failed to load "C:/Users/61421/trade_tracker/test/sec_splash_screen_test.dart": Compilation failed for testPath=C:/Users/61421/trade_tracker/test/sec_splash_screen_test.dart
+
+To run this test again: C:\Users\61421\flutter\bin\cache\dart-sdk\bin\dart.exe test C:/Users/61421/trade_tracker/test/sec_splash_screen_test.dart -p vm --plain-name "loading C:/Users/61421/trade_tracker/test/sec_splash_screen_test.dart"
+00:05 +0 -7: loading C:/Users/61421/trade_tracker/test/app_smoke_test.dart [E]       
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 10:3  throwToolExit
+  package:flutter_tools/src/compile.dart 898:9     DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1407:47                     _rootRunUnary
+  dart:async/future_impl.dart 847:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 876:13               Future._propagateToListeners       
+  dart:async/future_impl.dart 772:9                Future._propagateToListeners       
+  dart:async/future_impl.dart 652:5                Future._completeWithValue
+  dart:async/future_impl.dart 722:7                Future._asyncCompleteWithValue.<fn>  dart:async/zone.dart 1399:13                     _rootRun
+  dart:async/zone.dart 1301:19                     _CustomZone.run
+  dart:async/zone.dart 1209:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1249:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 118:13     _runPendingImmediateCallback       
+  dart:isolate-patch/isolate_patch.dart 185:5      _RawReceivePort._handleMessage     
+
+test/widget_test.dart:16:24: Error: The method 'listenable' isn't defined for the
+class 'MockBox<SecFiling>'.
+ - 'MockBox' is from 'test/hive_mock.dart'.
+ - 'SecFiling' is from 'package:trade_tracker/models/sec_filing.dart'
+ ('lib/models/sec_filing.dart').
+Try correcting the name to the name of an existing method, or defining a method named 
+'listenable'.
+    when(() => mockBox.listenable()).thenReturn(ValueNotifier([]));
+                       ^^^^^^^^^^
+lib/models/sec_filing.g.dart:20:7: Error: No named parameter with the name
+'accessionNumber'.
+      accessionNumber: fields[0] as String,
+      ^^^^^^^^^^^^^^^
+lib/models/sec_filing.dart:19:3: Context: Found this candidate, but the arguments     
+don't match.
+  SecFiling({
+  ^^^^^^^^^
+lib/models/sec_filing.g.dart:34:19: Error: The getter 'accessionNumber' isn't defined 
+for the class 'SecFiling'.
+ - 'SecFiling' is from 'package:trade_tracker/models/sec_filing.dart'
+ ('lib/models/sec_filing.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or    
+field named 'accessionNumber'.
+      ..write(obj.accessionNumber)
+                  ^^^^^^^^^^^^^^^
+lib/models/sec_filing.g.dart:38:19: Error: The getter 'reportDate' isn't defined for  
+the class 'SecFiling'.
+ - 'SecFiling' is from 'package:trade_tracker/models/sec_filing.dart'
+ ('lib/models/sec_filing.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or    
+field named 'reportDate'.
+      ..write(obj.reportDate)
+                  ^^^^^^^^^^
+lib/models/sec_filing.g.dart:42:19: Error: The getter 'isSaved' isn't defined for the 
+class 'SecFiling'.
+ - 'SecFiling' is from 'package:trade_tracker/models/sec_filing.dart'
+ ('lib/models/sec_filing.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or    
+field named 'isSaved'.
+      ..write(obj.isSaved)
+                  ^^^^^^^
+lib/models/sec_filing.g.dart:44:19: Error: The getter 'source' isn't defined for the  
+class 'SecFiling'.
+ - 'SecFiling' is from 'package:trade_tracker/models/sec_filing.dart'
+ ('lib/models/sec_filing.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or    
+field named 'source'.
+      ..write(obj.source);
+                  ^^^^^^
+lib/services/mock_filing_generator.dart:9:7: Error: No named parameter with the name  
+'accessionNumber'.
+      accessionNumber: 'ACC-${DateTime.now().millisecondsSinceEpoch}',
+      ^^^^^^^^^^^^^^^
+lib/models/sec_filing.dart:19:3: Context: Found this candidate, but the arguments     
+don't match.
+  SecFiling({
+  ^^^^^^^^^
+00:06 +0 -8: loading C:/Users/61421/trade_tracker/test/widget_test.dart [E]
+  Failed to load "C:/Users/61421/trade_tracker/test/widget_test.dart": Compilation failed for testPath=C:/Users/61421/trade_tracker/test/widget_test.dart
+
+To run this test again: C:\Users\61421\flutter\bin\cache\dart-sdk\bin\dart.exe test C:/Users/61421/trade_tracker/test/widget_test.dart -p vm --plain-name "loading C:/Users/61421/trade_tracker/test/widget_test.dart"
+00:06 +0 -8: Some tests failed.
+PS C:\Users\61421\trade_tracker> 

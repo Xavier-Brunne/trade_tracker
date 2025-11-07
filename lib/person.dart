@@ -1,11 +1,11 @@
 import 'package:hive/hive.dart';
 
-part 'person.g.dart';
+part 'person.g.dart'; // ✅ required
 
 @HiveType(typeId: 0)
-class Person extends HiveObject {
+class Person {
   @HiveField(0)
-  String name;
+  final String name;
 
   Person({required this.name});
 }

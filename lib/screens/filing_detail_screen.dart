@@ -1,88 +1,44 @@
 import 'package:flutter/material.dart';
 import '../models/sec_filing.dart';
-import '../features/dashboard/dashboard_screen.dart'; // ✅ dashboard import
+import '../services/hive_service.dart';
 
-class FilingDetailScreen extends StatefulWidget {
+class FilingDetailScreen extends StatelessWidget {
   final SecFiling filing;
+  final HiveService hiveService;
 
-  const FilingDetailScreen({super.key, required this.filing});
-
-  @override
-  State<FilingDetailScreen> createState() => _FilingDetailScreenState();
-}
-
-class _FilingDetailScreenState extends State<FilingDetailScreen> {
-  void _toggleSaved() {
-    setState(() {
-      widget.filing.isSaved = !widget.filing.isSaved;
-      widget.filing.save(); // persist change in Hive
-    });
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(widget.filing.isSaved
-            ? "✅ Filing marked as saved"
-            : "❌ Filing unmarked"),
-      ),
-    );
-  }
-
-  Widget _detailRow(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            '$label: ',
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
-          Expanded(child: Text(value)),
-        ],
-      ),
-    );
-  }
+  const FilingDetailScreen({
+    super.key,
+    required this.filing,
+    required this.hiveService,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final filing = widget.filing;
-
     return Scaffold(
-      appBar: AppBar(
-        title: Text(filing.issuer),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.home),
-            tooltip: 'Go to Dashboard',
-            onPressed: () {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (_) => const DashboardScreen()),
-                (route) => false,
-              );
-            },
-          ),
-        ],
-      ),
+      appBar: AppBar(title: Text('Filing Detail: ${filing.issuer}')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: ListView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _detailRow('Accession Number', filing.accessionNumber),
-            _detailRow('Filing Date', filing.filingDate),
-            _detailRow('Report Date', filing.reportDate),
-            _detailRow('Issuer', filing.issuer),
-            _detailRow('Source', filing.source),
-            _detailRow('Saved', filing.isSaved ? 'Yes' : 'No'),
-            const SizedBox(height: 20),
+            Text('Issuer: ${filing.issuer}',
+                style: Theme.of(context).textTheme.titleLarge),
+            const SizedBox(height: 8),
+            Text('Date: ${filing.filingDate}'),
+            const SizedBox(height: 8),
+            Text('Form Type: ${filing.formType}'),
+            const SizedBox(height: 16),
             ElevatedButton.icon(
-              onPressed: _toggleSaved,
-              icon: Icon(
-                filing.isSaved ? Icons.bookmark_remove : Icons.bookmark_add,
-              ),
-              label: Text(
-                filing.isSaved ? "Unmark Saved" : "Mark as Saved",
-              ),
+              icon: const Icon(Icons.save),
+              label: const Text('Save Filing'),
+              onPressed: () async {
+                final box = hiveService.getBox<SecFiling>('secFilings');
+                await box.put(filing.id, filing);
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("✅ Filing saved")),
+                );
+              },
             ),
           ],
         ),

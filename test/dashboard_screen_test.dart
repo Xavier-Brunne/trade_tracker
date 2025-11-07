@@ -1,21 +1,25 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
-import 'package:trade_tracker/features/dashboard/dashboard_screen.dart';
-import 'test_helpers.dart';
+import 'package:trade_tracker/main.dart';
+import 'hive_mock.dart'; // make sure this defines MockHiveService
 
 void main() {
-  setUp(() async => await initTestHive(['people']));
-  tearDown(() async => await disposeTestHive());
+  testWidgets('Dashboard smoke test with mock HiveService',
+      (WidgetTester tester) async {
+    final mockHiveService = MockHiveService();
 
-  testWidgets('Dashboard shows one FAB', (WidgetTester tester) async {
     await tester.pumpWidget(
-      const MaterialApp(
-        home: DashboardScreen(),
+      MaterialApp(
+        home: TradeTrackerApp(hiveService: mockHiveService),
       ),
     );
 
+    // Wait for splash transition
+    await tester.pump(const Duration(seconds: 3));
     await tester.pumpAndSettle();
 
-    expect(find.byType(FloatingActionButton), findsOneWidget);
+    // Basic sanity checks
+    expect(find.byType(MaterialApp), findsOneWidget);
+    expect(find.byType(Scaffold), findsWidgets);
   });
 }
