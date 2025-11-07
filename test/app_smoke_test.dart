@@ -1,16 +1,17 @@
-import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:trade_tracker/main.dart';
-import 'hive_mock.dart'; // make sure this defines MockHiveService
+import 'package:trade_tracker/services/hive_service.dart';
 
 void main() {
-  testWidgets('Dashboard smoke test with mock HiveService',
-      (WidgetTester tester) async {
-    final mockHiveService = MockHiveService();
+  testWidgets('Dashboard smoke test', (WidgetTester tester) async {
+    // ✅ HiveService is not const, so just use final
+    final hiveService = const HiveService();
 
     await tester.pumpWidget(
       MaterialApp(
-        home: TradeTrackerApp(hiveService: mockHiveService),
+        // ✅ Drop const here too, since hiveService is a runtime object
+        home: TradeTrackerApp(hiveService: hiveService),
       ),
     );
 

@@ -1,16 +1,15 @@
-import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:trade_tracker/main.dart';
 import 'package:trade_tracker/services/hive_service.dart';
 
-// You can use a real HiveService or a mock depending on your setup.
-// For a simple smoke test, a real HiveService is fine.
 void main() {
   testWidgets('Dashboard smoke test', (WidgetTester tester) async {
-    final hiveService = HiveService();
+    const hiveService = HiveService();
 
     await tester.pumpWidget(
-      MaterialApp(
+      const MaterialApp(
+        // ✅ add const for performance
         home: TradeTrackerApp(hiveService: hiveService),
       ),
     );

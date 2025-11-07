@@ -1,28 +1,15 @@
-import '../models/sec_filing.dart';
+import 'package:trade_tracker/models/sec_filing.dart';
 
-class MockFilingGenerator {
-  static int _counter = 1;
-
-  /// Generate a single mock SecFiling
-  static SecFiling generate({String issuer = 'Test Corp'}) {
-    final filing = SecFiling(
-      accessionNumber: 'ACC-${DateTime.now().millisecondsSinceEpoch}',
-      filingDate: DateTime.now().toIso8601String(),
-      reportDate: DateTime.now().toIso8601String(),
-      issuer: issuer,
-      isSaved: false, // ✅ default to not saved
-      source: 'mock', // ✅ clearly marked as mock
-    );
-
-    _counter++;
-    return filing;
-  }
-
-  /// Generate a batch of mock SecFilings
-  static List<SecFiling> generateBatch(int count) {
-    return List.generate(
-      count,
-      (i) => generate(issuer: 'Issuer ${_counter + i}'),
-    );
-  }
+/// Generates a mock SecFiling for testing and demo purposes.
+SecFiling mockFiling() {
+  return SecFiling(
+    id: 'mock-id',
+    accessionNumber: 'ACC-MOCK',
+    issuer: 'Mock Issuer',
+    filingDate: '2025-11-07',
+    reportDate: DateTime.now(),
+    formType: 'Form 4',
+    isSaved: false,
+    source: 'mock',
+  );
 }

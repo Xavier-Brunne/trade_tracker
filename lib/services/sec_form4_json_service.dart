@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../models/sec_filing.dart';
+import 'package:trade_tracker/models/sec_filing.dart';
 
 class SecForm4JsonService {
   static const String baseUrl = 'https://data.sec.gov/submissions/';
@@ -18,11 +18,19 @@ class SecForm4JsonService {
           .toList();
 
       return form4Indexes.map((i) {
+        final accession = filings['accessionNumber'][i];
+        final formType = filings['form'][i];
+        final filingDate = filings['filingDate'][i];
+        final reportDate = filings['reportDate'][i];
+
         return SecFiling(
-          accessionNumber: filings['accessionNumber'][i],
-          filingDate: filings['filingDate'][i],
-          reportDate: filings['reportDate'][i],
+          id: accession,
+          accessionNumber: accession,
           issuer: data['name'],
+          filingDate: filingDate,
+          reportDate: reportDate,
+          formType: formType,
+          isSaved: false,
           source: 'json',
         );
       }).toList();

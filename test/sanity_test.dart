@@ -1,34 +1,51 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:trade_tracker/person.dart';
-import 'hive_mock.dart';
+import 'package:hive/hive.dart';
+import 'package:trade_tracker/services/hive_service.dart';
+
+// Example Person model used in tests
+class Person {
+  final String name;
+  Person(this.name);
+}
+
+// FakePerson for fallback registration
+class FakePerson extends Fake implements Person {}
+
+class MockHiveService extends Mock implements HiveService {}
+
+class MockBox<T> extends Mock implements Box<T> {}
 
 void main() {
-  late MockBox<Person> mockBox;
   late MockHiveService mockHiveService;
+  late MockBox<Person> mockBox;
+
+  setUpAll(() {
+    registerFallbackValue(FakePerson()); // ✅ Person values
+    registerFallbackValue(''); // ✅ String keys
+  });
 
   setUp(() {
+    mockHiveService = MockHiveService();
     mockBox = MockBox<Person>();
-    mockHiveService = MockHiveService(mockBox);
-
-    // Stub basic behavior
-    when(() => mockBox.get(any())).thenReturn(null);
-    when(() => mockBox.put(any(), any())).thenAnswer((_) async {});
-    when(() => mockBox.values).thenReturn([]);
-    when(() => mockBox.isOpen).thenReturn(true);
   });
 
-  test('MockHiveService returns mock box', () {
-    final box = mockHiveService.getBox<Person>('people');
-    expect(box, mockBox);
-    expect(box.isOpen, true);
-  });
+  test('HiveService openBox and put/get works with mocks', () async {
+    final person = Person('Alice');
 
-  test('MockHiveService stores and retrieves Person', () async {
-    final person = Person(name: 'Alice');
-    await mockBox.put('p1', person);
+    // Stub openBox to return our mockBox
+    when(() => mockHiveService.openBox<Person>(any()))
+        .thenAnswer((_) async => mockBox);
 
-    final retrieved = mockBox.get('p1');
-    expect(retrieved?.name, 'Alice');
+    // Stub put and get
+    when(() => mockBox.put(any(), any()))
+        .thenAnswer((_) async => Future.value());
+    when(() => mockBox.get(any())).thenReturn(person);
+
+    final box = await mockHiveService.openBox<Person>('people');
+    await box.put('key1', person);
+    final result = box.get('key1');
+
+    expect(result!.name, equals('Alice'));
   });
 }

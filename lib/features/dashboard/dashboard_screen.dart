@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import '../../models/sec_filing.dart';
-import '../../person.dart';
-import '../../services/hive_service.dart';
-import '../../services/mock_filing_generator.dart';
-import '../../screens/filing_detail_screen.dart';
-import '../../screens/sec_form4_screen.dart';
+import 'package:trade_tracker/models/sec_filing.dart';
+import 'package:trade_tracker/models/person.dart';
+import 'package:trade_tracker/services/hive_service.dart';
+import 'package:trade_tracker/services/mock_filing_generator.dart';
+import 'package:trade_tracker/screens/filing_detail_screen.dart';
+import 'package:trade_tracker/screens/sec_form4_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   final HiveService hiveService;
@@ -33,7 +33,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       MaterialPageRoute(
         builder: (_) => FilingDetailScreen(
           filing: filing,
-          hiveService: widget.hiveService, // ✅ pass hiveService
+          hiveService: widget.hiveService,
         ),
       ),
     );
@@ -42,56 +42,47 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Trade Tracker Dashboard'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.bug_report),
-            tooltip: 'Add Mock Filing',
-            onPressed: () {
-              final mock = MockFilingGenerator.generate();
-              filingsBox.add(mock);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("✅ Added one mock filing")),
-              );
-            },
-          ),
-        ],
-      ),
+      appBar: AppBar(title: const Text("Dashboard")),
       body: ValueListenableBuilder<Box<SecFiling>>(
         valueListenable: filingsBox.listenable(),
         builder: (context, box, _) {
-          if (box.isEmpty) {
-            return const Center(child: Text('No filings available.'));
+          final filings = box.values.toList();
+
+          if (filings.isEmpty) {
+            return Center(
+              child: ElevatedButton(
+                onPressed: () async {
+                  final mock = mockFiling();
+                  await filingsBox.put(mock.id, mock);
+                },
+                child: const Text("Add Mock Filing"),
+              ),
+            );
           }
+
           return ListView.builder(
-            itemCount: box.length,
+            itemCount: filings.length,
             itemBuilder: (context, index) {
-              final filing = box.getAt(index);
-              if (filing == null) return const SizedBox.shrink();
+              final filing = filings[index];
               return ListTile(
-                leading: const Icon(Icons.article_outlined),
                 title: Text(filing.issuer),
-                subtitle: Text('Filed on ${filing.filingDate}'),
+                subtitle: Text("${filing.formType} • ${filing.filingDate}"),
                 onTap: () => _openFilingDetail(filing),
               );
             },
           );
         },
       ),
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (_) => SecForm4Screen(
-                hiveService: widget.hiveService, // ✅ pass hiveService
-              ),
+              builder: (_) => SecForm4Screen(hiveService: widget.hiveService),
             ),
           );
         },
-        icon: const Icon(Icons.rss_feed),
-        label: const Text("Form 4 Filings"),
+        child: const Icon(Icons.add),
       ),
     );
   }

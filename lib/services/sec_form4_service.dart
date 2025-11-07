@@ -1,28 +1,32 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../models/sec_filing.dart';
+import 'package:trade_tracker/models/sec_filing.dart';
 
-class SecForm4JsonService {
-  static const String baseUrl = 'https://data.sec.gov/submissions/';
+class SecForm4Service {
+  static const String baseUrl = 'https://api.sec.gov/form4/';
 
-  /// Fetches Form 4 filings for a given CIK
   static Future<List<SecFiling>> fetchForm4Filings(String cik) async {
-    final url = Uri.parse('$baseUrl$cik.json');
+    final url = Uri.parse('$baseUrl$cik');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      final filings = data['filings']['recent'];
-      final form4Indexes = List.generate(filings['form'].length, (i) => i)
-          .where((i) => filings['form'][i] == '4')
-          .toList();
+      final data = json.decode(response.body) as List<dynamic>;
 
-      return form4Indexes.map((i) {
+      return data.map((entry) {
+        final accession = entry['accessionNumber'] ?? '';
+        final issuer = entry['issuer'] ?? '';
+        final filingDate = entry['filingDate'] ?? '';
+        final reportDateStr = entry['reportDate'] ?? '';
+
         return SecFiling(
-          accessionNumber: filings['accessionNumber'][i],
-          filingDate: filings['filingDate'][i],
-          reportDate: filings['reportDate'][i],
-          issuer: data['name'],
+          id: accession,
+          accessionNumber: accession,
+          issuer: issuer,
+          filingDate: filingDate,
+          reportDate: DateTime.tryParse(reportDateStr) ?? DateTime.now(),
+          formType: entry['formType'] ?? 'Form 4',
+          isSaved: false,
+          source: 'api',
         );
       }).toList();
     } else {

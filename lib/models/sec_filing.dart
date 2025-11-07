@@ -14,12 +14,28 @@ class SecFiling {
   final String filingDate;
 
   @HiveField(3)
+  final String accessionNumber;
+
+  @HiveField(4)
   final String formType;
 
-  SecFiling({
+  @HiveField(5)
+  final DateTime reportDate;
+
+  @HiveField(6)
+  final bool isSaved;
+
+  @HiveField(7)
+  final String source;
+
+  const SecFiling({
     required this.id,
     required this.issuer,
     required this.filingDate,
+    required this.accessionNumber,
     required this.formType,
+    required this.reportDate,
+    this.isSaved = false,
+    required this.source,
   });
 }

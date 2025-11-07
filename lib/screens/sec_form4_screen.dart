@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/sec_filing.dart';
-import '../services/hive_service.dart';
+import 'package:trade_tracker/models/sec_filing.dart';
+import 'package:trade_tracker/services/hive_service.dart';
 
 class SecForm4Screen extends StatefulWidget {
   final HiveService hiveService;
@@ -24,17 +24,23 @@ class _SecForm4ScreenState extends State<SecForm4Screen> {
     super.dispose();
   }
 
-  void _saveForm() async {
+  Future<void> _saveForm() async {
+    // Build a SecFiling from user input
     final filing = SecFiling(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      id: 'ID-${DateTime.now().millisecondsSinceEpoch}',
       issuer: _issuerController.text,
       filingDate: _dateController.text,
+      accessionNumber: 'ACC-${DateTime.now().millisecondsSinceEpoch}',
       formType: _formTypeController.text,
+      reportDate: DateTime.tryParse(_dateController.text) ?? DateTime.now(),
+      isSaved: true,
+      source: 'manual', // distinguish from rss/json
     );
 
     final box = widget.hiveService.getBox<SecFiling>('secFilings');
     await box.put(filing.id, filing);
 
+    if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text("✅ Form 4 filing saved")),
     );
@@ -56,7 +62,8 @@ class _SecForm4ScreenState extends State<SecForm4Screen> {
             ),
             TextField(
               controller: _dateController,
-              decoration: const InputDecoration(labelText: "Filing Date"),
+              decoration:
+                  const InputDecoration(labelText: "Filing Date (YYYY-MM-DD)"),
             ),
             TextField(
               controller: _formTypeController,

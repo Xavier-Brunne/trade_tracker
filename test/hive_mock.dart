@@ -1,17 +1,9 @@
-import 'package:hive/hive.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:hive/hive.dart';
 import 'package:trade_tracker/services/hive_service.dart';
 
+/// Mock HiveService for testing
+class MockHiveService extends Mock implements HiveService {}
+
+/// Mock Box<T> for testing
 class MockBox<T> extends Mock implements Box<T> {}
-
-class MockHiveService extends HiveService {
-  final Box<dynamic> _mockBox;
-
-  MockHiveService(this._mockBox);
-
-  @override
-  Box<T> getBox<T>(String name) => _mockBox as Box<T>;
-
-  @override
-  Future<Box<T>> openBox<T>(String name) async => _mockBox as Box<T>;
-}
