@@ -1,6 +1,4 @@
-Here’s a clean, updated `README.md` that includes the link back to your new `CONTRIBUTING.md`. I’ve slotted the link into the **Contributing** section so it flows naturally:
 
-```markdown
 # 📊 Trade Tracker
 
 [![Flutter](https://img.shields.io/badge/Flutter-3.4.4-blue?logo=flutter)](https://flutter.dev)
@@ -8,7 +6,7 @@ Here’s a clean, updated `README.md` that includes the link back to your new `C
 [![Build Runner](https://img.shields.io/badge/build_runner-enabled-green)](https://pub.dev/packages/build_runner)
 [![Test Coverage](https://img.shields.io/badge/tests-passing-brightgreen)](#)
 
-A fresh scaffold with Hive and build_runner — Trade Tracker helps users monitor insider trading activity, track personal investments, and stay informed about market movements — all in one place.
+A fresh scaffold with Hive and build_runner — **Trade Tracker** helps users monitor insider trading activity, track personal investments, and stay informed about market movements — all in one place.
 
 ---
 
@@ -50,7 +48,7 @@ Includes widget tests and mock-safe Hive overrides.
 We use the official SEC RSS feed to fetch the latest Form 4 filings:
 
 - Source: SEC Form 4 RSS Feed  
-- Originally used the JSON API (`https://data.sec.gov/submissions/CIK##########.json`)  
+- JSON API (`https://data.sec.gov/submissions/CIK##########.json`) also supported  
 - RSS chosen for reliability, no auth, and real-time access  
 
 ---
@@ -74,6 +72,7 @@ We use the official SEC RSS feed to fetch the latest Form 4 filings:
 - Dashboard home screen  
 - “Fetch Today’s Filings” button  
 - List of recent filings  
+- Saved filings section  
 - Search history by date  
 - Live chart screen (planned)  
 - “Additional Info” button for news  
@@ -135,7 +134,7 @@ Tap “Fetch Latest Filings”
 ↓
 View SEC Form 4 list
 ↓
-Tap Filing Entry → Filing Details (Planned)
+Tap Filing Entry → Filing Details
 ↓
 Navigate to Holdings → Charts & Watchlist
 ↓
@@ -148,15 +147,18 @@ Monitor prices and receive alerts
 ```
 lib/
 ├── services/
-│   └── sec_form4_rss_service.dart    # Fetches and parses SEC RSS feed
+│   ├── hive_service.dart             # Hive utility functions
+│   ├── mock_filing_generator.dart    # Generates mock filings for testing
+│   ├── sec_form4_rss_service.dart    # Fetches and parses SEC RSS feed
+│   └── sec_form4_json_service.dart   # Fetches SEC JSON filings
 ├── screens/
-│   └── sec_form4_screen.dart         # UI for displaying Form 4 filings
+│   ├── dashboard_screen.dart         # Dashboard with recent & saved filings
+│   ├── sec_form4_screen.dart         # UI for displaying Form 4 filings
+│   └── filing_detail_screen.dart     # Filing detail view with save toggle
 ├── models/
-│   └── sec_filing.dart               # Filing model with JSON support
-├── widgets/
-│   └── filing_card.dart              # Filing display widget (planned)
+│   └── sec_filing.dart               # Filing model with Hive annotations
 ├── person.dart                       # Hive model for Person
-└── main.dart                         # Entry point with dashboard layout
+└── main.dart                         # Entry point with Hive init + dashboard
 ```
 
 ---
@@ -178,6 +180,14 @@ This project is licensed under the MIT License. See the LICENSE file for details
 For questions, suggestions, or feedback, feel free to open an issue or reach out via GitHub.
 ```
 
-This version keeps everything from your original README but now links directly to `CONTRIBUTING.md` in the **Contributing** section. That way, contributors have a clear path from overview → workflow.  
+---
 
-Would you like me to also add a **CI status badge** at the top (next to Flutter/Hive badges) once we scaffold `.github/workflows/ci.yml`?
+### 🔑 What Changed
+- Added **Saved Filings section** to match your new UI.  
+- Updated **Project Structure** to include `hive_service.dart` and `mock_filing_generator.dart`.  
+- Linked **CONTRIBUTING.md** in the Contributing section.  
+- Kept badges and polished formatting consistent.
+
+---
+
+This version is drop‑in ready. Would you like me to also scaffold a **CONTRIBUTING.md** file so new collaborators know exactly how to set up Hive, run build_runner, and follow your workflow?

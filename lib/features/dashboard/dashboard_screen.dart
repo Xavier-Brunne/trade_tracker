@@ -1,129 +1,91 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import '../../person.dart';
-import '../../models/sec_filing.dart';
-import '../../screens/sec_form4_screen.dart';
-import '../../services/hive_service.dart';
-import '../../services/mock_filing_generator.dart'; // ✅ corrected path
+import '../models/sec_filing.dart';
+import '../features/dashboard/dashboard_screen.dart'; // ✅ import dashboard
 
-class DashboardScreen extends StatefulWidget {
-  const DashboardScreen({super.key});
+class FilingDetailScreen extends StatefulWidget {
+  final SecFiling filing;
+
+  const FilingDetailScreen({super.key, required this.filing});
 
   @override
-  State<DashboardScreen> createState() => _DashboardScreenState();
+  State<FilingDetailScreen> createState() => _FilingDetailScreenState();
 }
 
-class _DashboardScreenState extends State<DashboardScreen> {
-  late Box<Person> peopleBox;
-  late Box<SecFiling> secBox;
+class _FilingDetailScreenState extends State<FilingDetailScreen> {
+  void _toggleSaved() {
+    setState(() {
+      widget.filing.isSaved = !widget.filing.isSaved;
+      widget.filing.save(); // persist change in Hive
+    });
 
-  @override
-  void initState() {
-    super.initState();
-    peopleBox = HiveService.getBox<Person>('people');
-    secBox = HiveService.getBox<SecFiling>('secFilings');
-  }
-
-  void _addPerson() {
-    final newPerson = Person(name: 'Darren ${DateTime.now().second}');
-    peopleBox.add(newPerson);
-    setState(() {});
-  }
-
-  void _addMockFiling() {
-    final mock =
-        MockFilingGenerator.generate(issuer: 'Darren ${secBox.length + 1}');
-    secBox.add(mock);
-    setState(() {});
-    print('📄 Added mock filing: ${mock.issuer}');
-  }
-
-  Widget _secFilingsCard(BuildContext context) {
-    return Card(
-      elevation: 3,
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: InkWell(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => const SecForm4Screen()),
-          );
-        },
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            children: [
-              const Icon(Icons.article, size: 32, color: Colors.blue),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text("Latest SEC Filings",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold)),
-                    SizedBox(height: 4),
-                    Text("Tap to view recent insider trades",
-                        style: TextStyle(fontSize: 14)),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(widget.filing.isSaved
+            ? "✅ Filing marked as saved"
+            : "❌ Filing unmarked"),
       ),
     );
   }
 
-  Widget _secFilingsList() {
-    return ValueListenableBuilder(
-      valueListenable: secBox.listenable(),
-      builder: (context, Box<SecFiling> box, _) {
-        if (box.isEmpty) {
-          return const Center(child: Text('No filings yet.'));
-        }
-
-        return ListView.builder(
-          itemCount: box.length,
-          itemBuilder: (context, index) {
-            final filing = box.getAt(index);
-            if (filing == null) return const SizedBox.shrink();
-            return ListTile(
-              leading: const Icon(Icons.article),
-              title: Text(filing.issuer),
-              subtitle: Text('Filed on ${filing.filingDate}'),
-              trailing: Text(filing.source),
-            );
-          },
-        );
-      },
+  Widget _detailRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '$label: ',
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          Expanded(child: Text(value)),
+        ],
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final filing = widget.filing;
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Dashboard')),
-      body: Column(
-        children: [
-          _secFilingsCard(context),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Recent Filings',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-            ),
+      appBar: AppBar(
+        title: Text(filing.issuer),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.home),
+            tooltip: 'Go to Dashboard',
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (_) => const DashboardScreen()),
+                (route) => false,
+              );
+            },
           ),
-          Expanded(child: _secFilingsList()),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _addMockFiling,
-        child: const Icon(Icons.add),
-        tooltip: 'Add mock SEC filing',
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ListView(
+          children: [
+            _detailRow('Accession Number', filing.accessionNumber),
+            _detailRow('Filing Date', filing.filingDate),
+            _detailRow('Report Date', filing.reportDate),
+            _detailRow('Issuer', filing.issuer),
+            _detailRow('Source', filing.source),
+            _detailRow('Saved', filing.isSaved ? 'Yes' : 'No'),
+            const SizedBox(height: 20),
+            ElevatedButton.icon(
+              onPressed: _toggleSaved,
+              icon: Icon(
+                filing.isSaved ? Icons.bookmark_remove : Icons.bookmark_add,
+              ),
+              label: Text(
+                filing.isSaved ? "Unmark Saved" : "Mark as Saved",
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

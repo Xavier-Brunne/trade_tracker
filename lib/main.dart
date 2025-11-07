@@ -1,37 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
-import 'person.dart';
 import 'models/sec_filing.dart';
+import 'person.dart';
 import 'features/dashboard/dashboard_screen.dart';
-import 'features/splash/sec_splash_screen.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // ✅ Initialize Hive
   await Hive.initFlutter();
 
-  // ✅ Register adapters safely
-  if (!Hive.isAdapterRegistered(0)) {
-    Hive.registerAdapter(PersonAdapter());
-  }
-  if (!Hive.isAdapterRegistered(1)) {
-    Hive.registerAdapter(SecFilingAdapter());
-  }
+  // ✅ Register adapters
+  Hive.registerAdapter(PersonAdapter());
+  Hive.registerAdapter(SecFilingAdapter());
 
-  // ✅ Open boxes
+  // ✅ Open boxes before app launch
   await Hive.openBox<Person>('people');
   await Hive.openBox<SecFiling>('secFilings');
 
-  // 🧠 Diagnostics
-  final peopleBox = Hive.box<Person>('people');
-  print('🔍 Hive box "people" runtimeType: ${peopleBox.runtimeType}');
-  print('📁 Hive box path: ${peopleBox.path}');
-
-  runApp(const MyApp());
+  runApp(const TradeTrackerApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class TradeTrackerApp extends StatelessWidget {
+  const TradeTrackerApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +30,8 @@ class MyApp extends StatelessWidget {
       title: 'Trade Tracker',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        useMaterial3: true,
       ),
-      debugShowCheckedModeBanner: false,
       home: const DashboardScreen(),
     );
   }

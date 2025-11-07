@@ -3,7 +3,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '../models/sec_filing.dart';
 import '../services/sec_form4_json_service.dart';
 import '../services/sec_form4_rss_service.dart';
-import '../services/mock_filing_generator.dart'; // ✅ add this
+import '../services/mock_filing_generator.dart';
 import '../screens/filing_detail_screen.dart';
 
 class SecForm4Screen extends StatefulWidget {
@@ -120,19 +120,34 @@ class _SecForm4ScreenState extends State<SecForm4Screen> {
 
   Widget sourceBadge(String source) {
     final isJson = source == 'json';
+    final isMock = source == 'mock';
+    Color? badgeColor;
+    IconData badgeIcon;
+
+    if (isJson) {
+      badgeColor = Colors.blue[100];
+      badgeIcon = Icons.data_object;
+    } else if (isMock) {
+      badgeColor = Colors.grey[300];
+      badgeIcon = Icons.bug_report;
+    } else {
+      badgeColor = Colors.orange[100];
+      badgeIcon = Icons.rss_feed;
+    }
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: isJson ? Colors.blue[100] : Colors.orange[100],
+        color: badgeColor,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(isJson ? Icons.data_object : Icons.rss_feed, size: 14),
+          Icon(badgeIcon, size: 14),
           const SizedBox(width: 4),
           Text(
-            isJson ? 'JSON' : 'RSS',
+            source.toUpperCase(),
             style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
           ),
         ],
@@ -143,7 +158,7 @@ class _SecForm4ScreenState extends State<SecForm4Screen> {
   Widget _buildFilingTile(SecFiling filing) {
     return ListTile(
       leading: const Icon(Icons.article_outlined),
-      title: Text(filing.issuer), // ✅ use issuer field
+      title: Text(filing.issuer),
       subtitle: Text('Filed on ${filing.filingDate}'),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
@@ -153,7 +168,7 @@ class _SecForm4ScreenState extends State<SecForm4Screen> {
           IconButton(
             icon: const Icon(Icons.cloud_download),
             tooltip: 'Fetch by CIK',
-            onPressed: () => _fetchByCik(filing.cik),
+            onPressed: () => _fetchByCik(filing.accessionNumber),
           ),
         ],
       ),
