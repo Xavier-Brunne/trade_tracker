@@ -20,7 +20,8 @@ void main() {
     when(() => mockBox.values).thenReturn([]);
     when(() => mockBox.isOpen).thenReturn(true);
 
-    HiveService.getBox = (String name) => mockBox;
+    // ✅ Type-safe override for generic HiveService.getBox<T>
+    HiveService.getBox = <T>(String name) => mockBox as Box<T>;
   });
 
   testWidgets('App boots and dashboard loads', (WidgetTester tester) async {

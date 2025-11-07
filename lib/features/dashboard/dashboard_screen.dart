@@ -17,8 +17,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
     super.initState();
-    peopleBox = HiveService.getBox('people') as Box<Person>;
-    // ✅ Uses test-safe accessor
+    peopleBox = HiveService.getBox<Person>('people'); // ✅ Type-safe access
   }
 
   void _addPerson() {

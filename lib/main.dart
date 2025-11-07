@@ -10,6 +10,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
 
+  // ✅ Register adapters safely
   if (!Hive.isAdapterRegistered(0)) {
     Hive.registerAdapter(PersonAdapter());
   }
@@ -17,12 +18,14 @@ void main() async {
     Hive.registerAdapter(SecFilingAdapter());
   }
 
+  // ✅ Open boxes
   await Hive.openBox<Person>('people');
   await Hive.openBox<SecFiling>('secFilings');
 
-  // ✅ Safe diagnostic: confirm box type after opening
+  // 🧠 Diagnostics
   final peopleBox = Hive.box<Person>('people');
   print('🔍 Hive box "people" runtimeType: ${peopleBox.runtimeType}');
+  print('📁 Hive box path: ${peopleBox.path}');
 
   runApp(const MyApp());
 }

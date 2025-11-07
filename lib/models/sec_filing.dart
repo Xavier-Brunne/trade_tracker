@@ -2,7 +2,7 @@ import 'package:hive/hive.dart';
 
 part 'sec_filing.g.dart';
 
-@HiveType(typeId: 1) // ✅ Changed from 0 to 1
+@HiveType(typeId: 1)
 class SecFiling extends HiveObject {
   @HiveField(0)
   final String accessionNumber;
@@ -20,7 +20,7 @@ class SecFiling extends HiveObject {
   bool isSaved;
 
   @HiveField(5)
-  final String source; // 'json' or 'rss'
+  final String source;
 
   SecFiling({
     required this.accessionNumber,

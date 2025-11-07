@@ -7,7 +7,7 @@ class SecForm4JsonService {
 
   /// Fetches Form 4 filings for a given CIK
   static Future<List<SecFiling>> fetchForm4Filings(String cik) async {
-    final url = Uri.parse('$baseUrlCIK$cik.json');
+    final url = Uri.parse('$baseUrl$cik.json');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {

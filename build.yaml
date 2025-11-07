@@ -1,0 +1,31 @@
+targets:
+  $default:
+    builders:
+      hive_generator:hive_generator:
+        options:
+          type_id_strategy: explicit
+          include_if_null: false
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    prefer_const_constructors: true
+    avoid_print: true
+    always_use_package_imports: true
+    unnecessary_null_checks: true
+    prefer_final_locals: true
+    sort_pub_dependencies: true
+
+analyzer:
+  errors:
+    invalid_annotation_target: ignore
+{
+  "dart.analysisExcludedFolders": [
+    "build",
+    ".dart_tool"
+  ],
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  }
+}
