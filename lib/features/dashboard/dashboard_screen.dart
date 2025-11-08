@@ -4,7 +4,7 @@ import 'package:trade_tracker/models/sec_filing.dart';
 import 'package:trade_tracker/models/person.dart';
 import 'package:trade_tracker/services/hive_service.dart';
 import 'package:trade_tracker/services/mock_filing_generator.dart';
-import 'package:trade_tracker/services/sec_service.dart'; // <-- add this
+import 'package:trade_tracker/services/sec_service.dart'; // live SEC service
 import 'package:trade_tracker/screens/filing_detail_screen.dart';
 import 'package:trade_tracker/screens/sec_form4_screen.dart';
 
@@ -77,6 +77,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       floatingActionButton: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          // Mock filing generator
           FloatingActionButton(
             heroTag: 'mock',
             onPressed: () {
@@ -85,23 +86,38 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   .getBox<SecFiling>('secFilings')
                   .put(mock.id, mock);
             },
-            child: const Icon(Icons.bug_report), // mock generator
+            child: const Icon(Icons.bug_report),
           ),
           const SizedBox(height: 12),
+
+          // Live SEC filings fetch
           FloatingActionButton(
             heroTag: 'live',
             onPressed: () async {
               final secService = SecService();
-              final filings =
-                  await secService.fetchCompanyFilings('0000320193'); // Apple
-              final box = widget.hiveService.getBox<SecFiling>('secFilings');
-              for (final filing in filings) {
-                await box.put(filing.id, filing);
+              try {
+                // Example: Apple CIK hard-coded for now
+                final filings =
+                    await secService.fetchCompanyFilings('0000320193');
+                final box = widget.hiveService.getBox<SecFiling>('secFilings');
+                for (final filing in filings.take(5)) {
+                  await box.put(filing.id, filing);
+                }
+                setState(() {});
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Fetched live SEC filings')),
+                );
+              } catch (e) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Error fetching filings: $e')),
+                );
               }
             },
-            child: const Icon(Icons.cloud_download), // live SEC
+            child: const Icon(Icons.cloud_download),
           ),
           const SizedBox(height: 12),
+
+          // Manual Form 4 entry
           FloatingActionButton(
             heroTag: 'form4',
             onPressed: () {
@@ -113,7 +129,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
               );
             },
-            child: const Icon(Icons.add), // manual form entry
+            child: const Icon(Icons.add),
           ),
         ],
       ),
