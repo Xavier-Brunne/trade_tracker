@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class FilingsScreen extends StatelessWidget {
-  const FilingsScreen({super.key});
+  const FilingsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

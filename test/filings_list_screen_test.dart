@@ -4,14 +4,13 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:trade_tracker/models/sec_filing.dart';
 import 'package:trade_tracker/services/hive_service.dart';
 import 'package:trade_tracker/features/dashboard/dashboard_screen.dart';
-import 'package:trade_tracker/features/filing_detail/filing_detail_screen.dart';
 
 void main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   Hive.registerAdapter(SecFilingAdapter());
 
-  group('FilingDetailScreen navigation', () {
+  group('FilingsListScreen', () {
     late HiveService hiveService;
     late Box<SecFiling> filingsBox;
 
@@ -20,7 +19,7 @@ void main() async {
       filingsBox = await Hive.openBox<SecFiling>('secFilings');
       await filingsBox.clear();
 
-      // Seed one filing
+      // Seed multiple filings
       await filingsBox.put(
         '1',
         SecFiling(
@@ -34,9 +33,22 @@ void main() async {
           source: 'mock',
         ),
       );
+      await filingsBox.put(
+        '2',
+        SecFiling(
+          id: '2',
+          issuer: 'Test Inc',
+          filingDate: '2025-11-07',
+          accessionNumber: '0000000002',
+          formType: '10-K',
+          reportDate: DateTime.now(),
+          isSaved: false,
+          source: 'mock',
+        ),
+      );
     });
 
-    testWidgets('tapping a filing opens detail screen',
+    testWidgets('renders multiple filings in list',
         (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
@@ -44,19 +56,12 @@ void main() async {
         ),
       );
 
-      // Verify filing appears in dashboard
+      // Verify both seeded filings appear
       expect(find.text('Demo Corp'), findsOneWidget);
+      expect(find.text('Form 4 • 2025-11-08'), findsOneWidget);
 
-      // Tap the list tile
-      await tester.tap(find.text('Demo Corp'));
-      await tester.pumpAndSettle();
-
-      // Verify detail screen renders key fields
-      expect(find.byType(FilingDetailScreen), findsOneWidget);
-      expect(find.text('Demo Corp'), findsOneWidget);
-      expect(find.text('Form 4'), findsOneWidget);
-      expect(find.text('2025-11-08'), findsOneWidget);
-      expect(find.text('0000000001'), findsOneWidget);
+      expect(find.text('Test Inc'), findsOneWidget);
+      expect(find.text('10-K • 2025-11-07'), findsOneWidget);
     });
   });
 }

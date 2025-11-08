@@ -1,26 +1,42 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:trade_tracker/main.dart';
+import 'package:hive/hive.dart';
+import 'package:trade_tracker/models/person.dart';
+import 'package:trade_tracker/models/sec_filing.dart';
 import 'package:trade_tracker/services/hive_service.dart';
+import 'package:trade_tracker/main.dart'; // your root app widget
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  setUpAll(() async {
+    // Initialise Hive in a temp directory (no path_provider plugin needed)
+    Hive.init(Directory.systemTemp.path);
+
+    // Register adapters
+    Hive.registerAdapter(PersonAdapter());
+    Hive.registerAdapter(SecFilingAdapter());
+
+    // Open required boxes
+    await Hive.openBox<Person>('people');
+    await Hive.openBox<SecFiling>('secFilings');
+  });
+
+  tearDownAll(() async {
+    await Hive.box<Person>('people').close();
+    await Hive.box<SecFiling>('secFilings').close();
+  });
+
   testWidgets('Dashboard smoke test', (WidgetTester tester) async {
-    // ✅ HiveService is not const, so just use final
-    final hiveService = const HiveService();
+    final hiveService = HiveService();
 
-    await tester.pumpWidget(
-      MaterialApp(
-        // ✅ Drop const here too, since hiveService is a runtime object
-        home: TradeTrackerApp(hiveService: hiveService),
-      ),
-    );
+    // Pump your root app widget directly (no extra MaterialApp wrapper)
+    await tester.pumpWidget(TradeTrackerApp(hiveService: hiveService));
 
-    // Wait for splash transition
-    await tester.pump(const Duration(seconds: 3));
-    await tester.pumpAndSettle();
+    // Verify dashboard title appears
+    expect(find.text('Dashboard'), findsOneWidget);
 
-    // Basic sanity checks
-    expect(find.byType(MaterialApp), findsOneWidget);
-    expect(find.byType(Scaffold), findsWidgets);
+    // Verify initial state shows "Add Mock Filing" button
+    expect(find.text('Add Mock Filing'), findsOneWidget);
   });
 }

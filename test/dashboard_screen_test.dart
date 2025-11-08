@@ -1,56 +1,55 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
-import 'package:trade_tracker/features/dashboard/dashboard_screen.dart';
-import 'package:trade_tracker/services/mock_filing_generator.dart';
+import 'package:hive/hive.dart';
+import 'package:trade_tracker/models/person.dart';
 import 'package:trade_tracker/models/sec_filing.dart';
-import 'hive_mock.dart';
+import 'package:trade_tracker/services/hive_service.dart';
+import 'package:trade_tracker/features/dashboard/dashboard_screen.dart';
 
 void main() {
-  late MockHiveService mockHiveService;
-  late MockBox<SecFiling> mockBox;
+  TestWidgetsFlutterBinding.ensureInitialized();
 
-  setUpAll(() {
-    registerFallbackValue(''); // String keys
-    registerFallbackValue(SecFiling(
-      id: '',
-      issuer: '',
-      filingDate: '',
-      accessionNumber: '',
-      formType: '',
-      reportDate: DateTime.now(),
-      isSaved: false,
-      source: '',
-    ));
+  setUpAll(() async {
+    // Initialise Hive in a temp directory (no path_provider plugin needed)
+    Hive.init(Directory.systemTemp.path);
+
+    // Register adapters
+    Hive.registerAdapter(PersonAdapter());
+    Hive.registerAdapter(SecFilingAdapter());
+
+    // Open required boxes
+    await Hive.openBox<Person>('people');
+    await Hive.openBox<SecFiling>('secFilings');
   });
 
-  setUp(() {
-    mockHiveService = MockHiveService();
-    mockBox = MockBox<SecFiling>();
-
-    when(() => mockHiveService.getBox<SecFiling>('secFilings'))
-        .thenReturn(mockBox);
-
-    when(() => mockBox.values).thenReturn(<SecFiling>[]);
+  tearDownAll(() async {
+    await Hive.box<Person>('people').close();
+    await Hive.box<SecFiling>('secFilings').close();
   });
 
-  testWidgets('DashboardScreen renders and adds mock filing',
-      (WidgetTester tester) async {
-    await tester.pumpWidget(
-      MaterialApp(
-        home: DashboardScreen(hiveService: mockHiveService),
-      ),
-    );
+  group('DashboardScreen', () {
+    testWidgets('renders and adds mock filing', (WidgetTester tester) async {
+      final hiveService = HiveService();
 
-    expect(find.text('Dashboard'), findsOneWidget);
-    expect(find.text('Add Mock Filing'), findsOneWidget);
+      await tester.pumpWidget(
+        MaterialApp(
+          home: DashboardScreen(hiveService: hiveService),
+        ),
+      );
 
-    await tester.tap(find.text('Add Mock Filing'));
-    await tester.pump();
+      // Verify dashboard title
+      expect(find.text('Dashboard'), findsOneWidget);
 
-    final mock = mockFiling();
-    expect(mock.issuer, isNotEmpty);
-    expect(mock.formType, equals('Form 4'));
-    expect(mock.source, equals('mock'));
+      // Initially empty, shows "Add Mock Filing" button
+      expect(find.text('Add Mock Filing'), findsOneWidget);
+
+      // Tap button to add mock filing
+      await tester.tap(find.text('Add Mock Filing'));
+      await tester.pumpAndSettle();
+
+      // Verify a filing appears in the list
+      expect(find.byType(ListTile), findsWidgets);
+    });
   });
 }

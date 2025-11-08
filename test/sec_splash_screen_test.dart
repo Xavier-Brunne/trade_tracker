@@ -1,34 +1,50 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
+import 'package:hive/hive.dart';
+import 'package:trade_tracker/models/person.dart';
+import 'package:trade_tracker/models/sec_filing.dart';
+import 'package:trade_tracker/services/hive_service.dart';
 import 'package:trade_tracker/features/splash/sec_splash_screen.dart';
-import 'hive_mock.dart';
 
 void main() {
-  late MockHiveService mockHiveService;
+  TestWidgetsFlutterBinding.ensureInitialized();
 
-  setUpAll(() {
-    // Register fallback values for Hive keys
-    registerFallbackValue('');
+  setUpAll(() async {
+    // Initialise Hive in a temp directory (no path_provider plugin needed)
+    Hive.init(Directory.systemTemp.path);
+
+    // Register adapters
+    Hive.registerAdapter(PersonAdapter());
+    Hive.registerAdapter(SecFilingAdapter());
+
+    // Open required boxes
+    await Hive.openBox<Person>('people');
+    await Hive.openBox<SecFiling>('secFilings');
   });
 
-  setUp(() {
-    mockHiveService = MockHiveService();
+  tearDownAll(() async {
+    await Hive.box<Person>('people').close();
+    await Hive.box<SecFiling>('secFilings').close();
   });
 
   testWidgets('SecSplashScreen shows splash and navigates',
       (WidgetTester tester) async {
+    final hiveService = HiveService();
+
     await tester.pumpWidget(
       MaterialApp(
-        home: SecSplashScreen(hiveService: mockHiveService),
+        home: SecSplashScreen(hiveService: hiveService),
       ),
     );
 
+    // Verify splash text appears (match exactly what your widget renders)
     expect(find.text('Trade Tracker'), findsOneWidget);
 
-    await tester.pump(const Duration(seconds: 3));
-    await tester.pumpAndSettle();
+    // Pump enough frames to allow navigation
+    await tester.pumpAndSettle(const Duration(seconds: 3));
 
-    expect(find.byType(Scaffold), findsWidgets);
+    // Verify dashboard title appears after navigation
+    expect(find.text('Dashboard'), findsOneWidget);
   });
 }

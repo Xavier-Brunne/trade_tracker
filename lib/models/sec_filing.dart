@@ -1,8 +1,8 @@
 import 'package:hive/hive.dart';
 
-part 'sec_filing.g.dart'; // ✅ required
+part 'sec_filing.g.dart';
 
-@HiveType(typeId: 1)
+@HiveType(typeId: 1) // ensure unique typeId across all Hive models
 class SecFiling {
   @HiveField(0)
   final String id;
@@ -35,7 +35,7 @@ class SecFiling {
     required this.accessionNumber,
     required this.formType,
     required this.reportDate,
-    this.isSaved = false,
+    required this.isSaved,
     required this.source,
   });
 }
