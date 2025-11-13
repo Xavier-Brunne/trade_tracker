@@ -222,6 +222,13 @@ Here’s a clean recap of where we’ve landed so you can pause and pick up seam
 
 ---
 
-You can rest easy knowing the dashboard is now **functional and displaying real SEC Form 4 listings**. When you’re back, we’ll extend the detail view so each filing isn’t just a line in a list but a full insider transaction snapshot.  
+here is a Re-difined function for powershell that allows for a quick push of updated files to getCikForTicker
 
-Sleep well — we’ll resume from this exact point next time.
+function pushDocs {
+    param(
+        [string]$Message = "docs: update documentation"
+    )
+    git add *.md *.txt
+    git commit -m $Message
+    git push
+}
