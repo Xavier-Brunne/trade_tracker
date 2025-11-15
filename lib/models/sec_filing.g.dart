@@ -22,16 +22,25 @@ class SecFilingAdapter extends TypeAdapter<SecFiling> {
       filingDate: fields[2] as String,
       accessionNumber: fields[3] as String,
       formType: fields[4] as String,
-      reportDate: fields[5] as DateTime,
-      isSaved: fields[6] as bool,
       source: fields[7] as String,
+      cik: fields[8] as String?,
+      reportDate: fields[5] as DateTime?,
+      isSaved: fields[6] as bool,
+      insiderName: fields[9] as String?,
+      insiderCik: fields[10] as String?,
+      transactionCode: fields[11] as String?,
+      transactionShares: fields[12] as int?,
+      transactionPrice: fields[13] as double?,
+      documentUrl: fields[14] as String?,
+      description: fields[15] as String?,
+      relatedTickers: (fields[16] as List?)?.cast<String>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, SecFiling obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(17)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -47,7 +56,25 @@ class SecFilingAdapter extends TypeAdapter<SecFiling> {
       ..writeByte(6)
       ..write(obj.isSaved)
       ..writeByte(7)
-      ..write(obj.source);
+      ..write(obj.source)
+      ..writeByte(8)
+      ..write(obj.cik)
+      ..writeByte(9)
+      ..write(obj.insiderName)
+      ..writeByte(10)
+      ..write(obj.insiderCik)
+      ..writeByte(11)
+      ..write(obj.transactionCode)
+      ..writeByte(12)
+      ..write(obj.transactionShares)
+      ..writeByte(13)
+      ..write(obj.transactionPrice)
+      ..writeByte(14)
+      ..write(obj.documentUrl)
+      ..writeByte(15)
+      ..write(obj.description)
+      ..writeByte(16)
+      ..write(obj.relatedTickers);
   }
 
   @override

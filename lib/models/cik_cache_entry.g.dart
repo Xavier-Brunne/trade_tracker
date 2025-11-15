@@ -1,35 +1,38 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'person.dart';
+part of 'cik_cache_entry.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class PersonAdapter extends TypeAdapter<Person> {
+class CikCacheEntryAdapter extends TypeAdapter<CikCacheEntry> {
   @override
-  final int typeId = 0;
+  final int typeId = 3;
 
   @override
-  Person read(BinaryReader reader) {
+  CikCacheEntry read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Person(
-      id: fields[0] as String,
-      name: fields[1] as String,
+    return CikCacheEntry(
+      ticker: fields[0] as String,
+      cik: fields[1] as String,
+      cachedAt: fields[2] as DateTime,
     );
   }
 
   @override
-  void write(BinaryWriter writer, Person obj) {
+  void write(BinaryWriter writer, CikCacheEntry obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
-      ..write(obj.id)
+      ..write(obj.ticker)
       ..writeByte(1)
-      ..write(obj.name);
+      ..write(obj.cik)
+      ..writeByte(2)
+      ..write(obj.cachedAt);
   }
 
   @override
@@ -38,7 +41,7 @@ class PersonAdapter extends TypeAdapter<Person> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is PersonAdapter &&
+      other is CikCacheEntryAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

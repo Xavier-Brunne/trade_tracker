@@ -1,9 +1,10 @@
 import 'package:hive/hive.dart';
 import 'package:hive_test/hive_test.dart';
 
-/// Call this in setUp() for each test file.
+/// Initialise Hive in a test environment.
+/// Call this in `setUpAll()` or `setUp()` for each test file.
 /// Example:
-///   setUp(() async => await initTestHive(['people']));
+///   setUpAll(() async => await initTestHive(['people', 'secFilings']));
 Future<void> initTestHive(List<String> boxes) async {
   await setUpTestHive();
   for (final name in boxes) {
@@ -13,7 +14,8 @@ Future<void> initTestHive(List<String> boxes) async {
   }
 }
 
-/// Call this in tearDown() for each test file.
+/// Dispose Hive after tests.
+/// Call this in `tearDownAll()` or `tearDown()` for each test file.
 Future<void> disposeTestHive() async {
   await tearDownTestHive(); // from hive_test
 }

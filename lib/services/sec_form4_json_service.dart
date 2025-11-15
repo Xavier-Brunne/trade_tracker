@@ -26,12 +26,16 @@ class SecForm4JsonService {
         return SecFiling(
           id: accession,
           accessionNumber: accession,
-          issuer: data['name'],
+          issuer: data['name'] ?? 'Unknown Issuer',
           filingDate: filingDate,
-          reportDate: reportDate,
+          reportDate: reportDate != null && reportDate.isNotEmpty
+              ? DateTime.tryParse(reportDate)
+              : null,
           formType: formType,
           isSaved: false,
           source: 'json',
+          cik: cik, // ✅ required argument passed through
+          description: 'Form 4 filing for $cik', // optional snippet
         );
       }).toList();
     } else {

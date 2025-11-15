@@ -1,69 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
-
 import 'package:trade_tracker/features/dashboard/dashboard_screen.dart';
+import 'package:trade_tracker/services/hive_service.dart';
 import 'package:trade_tracker/services/mock_filing_generator.dart';
+import 'package:hive_test/hive_test.dart';
+import 'package:hive/hive.dart';
 import 'package:trade_tracker/models/sec_filing.dart';
-import 'hive_mock.dart'; // defines MockHiveService + MockBox<T>
+import 'package:trade_tracker/models/person.dart';
 
 void main() {
-  late MockHiveService mockHiveService;
-  late MockBox<SecFiling> mockBox;
+  late HiveService hiveService;
 
-  setUpAll(() {
-    // Register fallback values for mocktail
-    registerFallbackValue('demoKey');
-    registerFallbackValue(SecFiling(
-      id: 'demo',
-      issuer: 'Demo Corp',
-      filingDate: '2025-11-08',
-      accessionNumber: '0000000001',
-      formType: 'Form 4',
-      reportDate: DateTime.now(),
-      isSaved: false,
-      source: 'mock',
-    ));
+  setUpAll(() async {
+    await setUpTestHive();
+    Hive.registerAdapter(SecFilingAdapter());
+    Hive.registerAdapter(PersonAdapter());
+    await Hive.openBox<SecFiling>('secFilings');
+    await Hive.openBox<Person>('people');
+    await Hive.openBox('settings');
+    hiveService = HiveService();
   });
 
-  setUp(() {
-    mockHiveService = MockHiveService();
-    mockBox = MockBox<SecFiling>();
-
-    // Stub HiveService.getBox to return our mock box
-    when(() => mockHiveService.getBox<SecFiling>('secFilings'))
-        .thenReturn(mockBox);
-
-    // Stub box.values to start empty
-    when(() => mockBox.values).thenReturn(<SecFiling>[]);
+  tearDownAll(() async {
+    await tearDownTestHive();
   });
 
-  testWidgets('DashboardScreen renders and adds mock filing',
+  testWidgets('Dashboard shows filings and navigates to detail screen',
       (WidgetTester tester) async {
-    // Pump the dashboard with the mocked HiveService
+    // Insert a mock filing into Hive
+    final mock = MockFilingGenerator.generate();
+    await hiveService.getBox<SecFiling>('secFilings').put(mock.id, mock);
+
     await tester.pumpWidget(
       MaterialApp(
-        home: DashboardScreen(hiveService: mockHiveService),
+        home: DashboardScreen(hiveService: hiveService),
       ),
     );
 
-    // Verify initial UI
-    expect(find.text('Dashboard'), findsOneWidget);
-    expect(find.text('Add Mock Filing'), findsOneWidget);
+    // Verify the mock filing appears in the list
+    expect(find.text(mock.issuer), findsOneWidget);
 
-    // Tap the "Add Mock Filing" button
-    await tester.tap(find.text('Add Mock Filing'));
-    await tester.pump();
+    // Tap the list tile
+    await tester.tap(find.text(mock.issuer));
+    await tester.pumpAndSettle();
 
-    // Generate a mock filing and assert its fields
-    final mock = mockFiling();
-    expect(mock.issuer, isNotEmpty);
-    expect(mock.formType, equals('Form 4'));
-    expect(mock.source, equals('mock'));
-
-    // Optionally, verify the box now contains the mock filing
-    when(() => mockBox.values).thenReturn([mock]);
-    expect(mockBox.values.length, 1);
-    expect(mockBox.values.first.issuer, 'Demo Corp');
+    // Verify detail screen renders
+    expect(find.text('Accession: ${mock.accessionNumber}'), findsOneWidget);
   });
 }

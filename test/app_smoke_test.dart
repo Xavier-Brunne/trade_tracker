@@ -1,42 +1,66 @@
-import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive/hive.dart';
 import 'package:trade_tracker/models/person.dart';
 import 'package:trade_tracker/models/sec_filing.dart';
 import 'package:trade_tracker/services/hive_service.dart';
-import 'package:trade_tracker/main.dart'; // your root app widget
+import 'package:trade_tracker/features/dashboard/dashboard_screen.dart';
+
+import 'test_hive_utils.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
+  late HiveService hiveService;
+
   setUpAll(() async {
-    // Initialise Hive in a temp directory (no path_provider plugin needed)
-    Hive.init(Directory.systemTemp.path);
+    await initTestHive();
+    registerAdapterSafely(PersonAdapter());
+    registerAdapterSafely(SecFilingAdapter());
 
-    // Register adapters
-    Hive.registerAdapter(PersonAdapter());
-    Hive.registerAdapter(SecFilingAdapter());
+    await openTestBox<Person>('people');
+    await openTestBox<SecFiling>('secFilings');
+    await openTestBox('settings');
+    await openTestBox('cikCache'); // ✅ ensure this is open for CIK lookups
 
-    // Open required boxes
-    await Hive.openBox<Person>('people');
-    await Hive.openBox<SecFiling>('secFilings');
+    // ✅ initialize hiveService here
+    hiveService = HiveService();
   });
 
   tearDownAll(() async {
-    await Hive.box<Person>('people').close();
-    await Hive.box<SecFiling>('secFilings').close();
+    await disposeTestHive();
   });
 
-  testWidgets('Dashboard smoke test', (WidgetTester tester) async {
-    final hiveService = HiveService();
+  group('App smoke test', () {
+    setUp(() async {
+      final box = Hive.box<SecFiling>('secFilings');
+      await box.clear();
 
-    // Pump your root app widget directly (no extra MaterialApp wrapper)
-    await tester.pumpWidget(TradeTrackerApp(hiveService: hiveService));
+      // ✅ Use the named Form 4 constructor with required cik
+      final filing = SecFiling.form4(
+        accessionNumber: '0000000000-25-000001',
+        issuer: 'SmokeTest Corp',
+        filingDate: '2025-11-13',
+        source: 'test',
+        cik: '0000000000', // ✅ required argument
+        insiderName: 'Test Insider',
+        insiderCik: '0000123456',
+        transactionCode: 'P',
+        transactionShares: 10,
+        transactionPrice: 1.0,
+      );
 
-    // Verify dashboard title appears
-    expect(find.text('Dashboard'), findsOneWidget);
+      await box.put(filing.id, filing);
+    });
 
-    // Verify initial state shows "Add Mock Filing" button
-    expect(find.text('Add Mock Filing'), findsOneWidget);
+    testWidgets('App launches and shows Dashboard',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(
+        MaterialApp(home: DashboardScreen(hiveService: hiveService)),
+      );
+
+      expect(find.text('Trade Tracker Dashboard'), findsOneWidget);
+      expect(find.text('SmokeTest Corp'), findsOneWidget);
+    });
   });
 }

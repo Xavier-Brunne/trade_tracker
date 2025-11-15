@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
+import 'package:trade_tracker/models/sec_filing.dart';
 
 class HiveService {
   final Map<String, Box> _boxes = {};
@@ -26,6 +27,18 @@ class HiveService {
       throw HiveError('Box "$name" not opened. Call openBox<T>() first.');
     }
     return box as Box<T>;
+  }
+
+  /// Save or update a SecFiling in the 'secFilings' box.
+  Future<void> putFiling(SecFiling filing) async {
+    final box = getBox<SecFiling>('secFilings');
+    await box.put(filing.id, filing);
+  }
+
+  /// Delete a SecFiling by id.
+  Future<void> deleteFiling(String id) async {
+    final box = getBox<SecFiling>('secFilings');
+    await box.delete(id);
   }
 
   /// Optional: seed mock data for dev dashboard preview

@@ -1,377 +1,381 @@
-PS C:\Users\61421\trade_tracker> flutter test
-00:01 +0 -1: C:/Users/61421/trade_tracker/test/cik_lookup_service_test.dart: CikLookupService resolves AAPL to Apple CIK [E]
-  HiveError: Box not found. Did you forget to call Hive.openBox()?
-  package:hive/src/hive_impl.dart 186:7                         HiveImpl._getBoxInternal     
-  package:hive/src/hive_impl.dart 197:33                        HiveImpl.box
-  package:trade_tracker/services/cik_cache_service.dart 12:32   CikCacheService._box
-  package:trade_tracker/services/cik_cache_service.dart 21:12   CikCacheService.getCik       
-  package:trade_tracker/services/cik_lookup_service.dart 19:26  CikLookupService.getCikForTicker
-  test\cik_lookup_service_test.dart 8:33                        main.<fn>.<fn>
-
-
-To run this test again: C:\Users\61421\flutter\bin\cache\dart-sdk\bin\dart.exe test C:/Users/61421/trade_tracker/test/cik_lookup_service_test.dart -p vm --plain-name "CikLookupService resolves AAPL to Apple CIK"
-00:01 +0 -2: C:/Users/61421/trade_tracker/test/cik_lookup_service_test.dart: CikLookupService returns null for unknown ticker [E]
-  HiveError: Box not found. Did you forget to call Hive.openBox()?
-  package:hive/src/hive_impl.dart 186:7                         HiveImpl._getBoxInternal     
-  package:hive/src/hive_impl.dart 197:33                        HiveImpl.box
-  package:trade_tracker/services/cik_cache_service.dart 12:32   CikCacheService._box
-  package:trade_tracker/services/cik_cache_service.dart 21:12   CikCacheService.getCik       
-  package:trade_tracker/services/cik_lookup_service.dart 19:26  CikLookupService.getCikForTicker
-  test\cik_lookup_service_test.dart 16:33                       main.<fn>.<fn>
-
-
-To run this test again: C:\Users\61421\flutter\bin\cache\dart-sdk\bin\dart.exe test C:/Users/61421/trade_tracker/test/cik_lookup_service_test.dart -p vm --plain-name "CikLookupService returns null for unknown ticker"
-00:02 +0 -3: loading C:/Users/61421/trade_tracker/test/filings_list_screen_test.dart [E]    
-  Failed to load "C:/Users/61421/trade_tracker/test/filings_list_screen_test.dart": MissingPluginException(No implementation found for method getApplicationDocumentsDirectory on channel 
-plugins.flutter.io/path_provider)
-  package:flutter/src/services/platform_channel.dart 332:7
-     MethodChannel._invokeMethod
-  ===== asynchronous gap ===========================
-  package:path_provider/path_provider.dart 121:24
-     getApplicationDocumentsDirectory
-  ===== asynchronous gap ===========================
-  package:hive_flutter/src/hive_extensions.dart 12:18
-     HiveX.initFlutter
-  ===== asynchronous gap ===========================
-  test\filings_list_screen_test.dart 10:3
-     main
-  ===== asynchronous gap ===========================
-  ..\AppData\Local\Temp\flutter_tools.6fb4c971\flutter_test_listener.fd194b3f\listener.dart 19:3  _testMain
-
-
-To run this test again: C:\Users\61421\flutter\bin\cache\dart-sdk\bin\dart.exe test C:/Users/61421/trade_tracker/test/filings_list_screen_test.dart -p vm --plain-name "loading C:/Users/61421/trade_tracker/test/filings_list_screen_test.dart"
-00:02 +0 -3: C:/Users/61421/trade_tracker/test/app_smoke_test.dart: Dashboard smoke test    
-══╡ EXCEPTION CAUGHT BY WIDGETS LIBRARY ╞═══════════════════════════════════════════════════════════
-The following HiveError was thrown building Builder:
-Box "people" not opened. Call openBox<T>() first.
-
-The relevant error-causing widget was:
-  MaterialApp MaterialApp:file:///C:/Users/61421/trade_tracker/lib/main.dart:46:12
-
-When the exception was thrown, this was the stack:
-#0      HiveService.getBox (package:trade_tracker/services/hive_service.dart:26:7)
-#1      _DashboardScreenState.initState (package:trade_tracker/features/dashboard/dashboard_screen.dart:37:36)
-#2      StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5618:55)     
-#3      ComponentElement.mount (package:flutter/src/widgets/framework.dart:5463:5)
-...     Normal element mounting (228 frames)
-#231    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4340:16)
-#232    MultiChildRenderObjectElement.inflateWidget (package:flutter/src/widgets/framework.dart:6904:36)
-#233    MultiChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:6916:32)
-...     Normal element mounting (463 frames)
-#696    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4340:16)
-#697    Element.updateChild (package:flutter/src/widgets/framework.dart:3843:20)
-#698    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5512:16) 
-#699    Element.rebuild (package:flutter/src/widgets/framework.dart:5203:7)
-#700    ProxyElement.update (package:flutter/src/widgets/framework.dart:5816:5)
-#701    Element.updateChild (package:flutter/src/widgets/framework.dart:3827:15)
-#702    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5512:16) 
-#703    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5650:11)  
-#704    Element.rebuild (package:flutter/src/widgets/framework.dart:5203:7)
-#705    StatefulElement.update (package:flutter/src/widgets/framework.dart:5673:5)
-#706    Element.updateChild (package:flutter/src/widgets/framework.dart:3827:15)
-#707    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5512:16) 
-#708    Element.rebuild (package:flutter/src/widgets/framework.dart:5203:7)
-#709    ProxyElement.update (package:flutter/src/widgets/framework.dart:5816:5)
-#710    Element.updateChild (package:flutter/src/widgets/framework.dart:3827:15)
-#711    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5512:16) 
-#712    Element.rebuild (package:flutter/src/widgets/framework.dart:5203:7)
-#713    ProxyElement.update (package:flutter/src/widgets/framework.dart:5816:5)
-#714    Element.updateChild (package:flutter/src/widgets/framework.dart:3827:15)
-#715    _RawViewElement._updateChild (package:flutter/src/widgets/view.dart:291:16)
-#716    _RawViewElement.update (package:flutter/src/widgets/view.dart:378:5)
-#717    Element.updateChild (package:flutter/src/widgets/framework.dart:3827:15)
-#718    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5512:16) 
-#719    Element.rebuild (package:flutter/src/widgets/framework.dart:5203:7)
-#720    StatelessElement.update (package:flutter/src/widgets/framework.dart:5563:5)
-#721    Element.updateChild (package:flutter/src/widgets/framework.dart:3827:15)
-#722    RootElement._rebuild (package:flutter/src/widgets/binding.dart:1581:16)
-#723    RootElement.update (package:flutter/src/widgets/binding.dart:1559:5)
-#724    RootElement.performRebuild (package:flutter/src/widgets/binding.dart:1573:7)
-#725    Element.rebuild (package:flutter/src/widgets/framework.dart:5203:7)
-#726    BuildOwner.buildScope (package:flutter/src/widgets/framework.dart:2905:19)
-#727    AutomatedTestWidgetsFlutterBinding.drawFrame (package:flutter_test/src/binding.dart:1418:19)
-#728    RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:443:5)
-#729    SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1392:15)
-#730    SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1313:9) 
-#731    AutomatedTestWidgetsFlutterBinding.pump.<anonymous closure> (package:flutter_test/src/binding.dart:1273:9)
-#734    TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:71:41)
-#735    AutomatedTestWidgetsFlutterBinding.pump (package:flutter_test/src/binding.dart:1260:27)
-#736    WidgetTester.pumpWidget.<anonymous closure> (package:flutter_test/src/widget_tester.dart:602:22)
-#739    TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:71:41)
-#740    WidgetTester.pumpWidget (package:flutter_test/src/widget_tester.dart:599:27)
-#741    main.<anonymous closure> (file:///C:/Users/61421/trade_tracker/test/app_smoke_test.dart:34:18)
-#742    testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:183:29)
-<asynchronous suspension>
-#743    TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1017:5)<asynchronous suspension>
-<asynchronous suspension>
-(elided 5 frames from dart:async and package:stack_trace)
-
-════════════════════════════════════════════════════════════════════════════════════════════════════
-══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
-The following TestFailure was thrown running a test:
-Expected: exactly one matching candidate
-  Actual: _TextWidgetFinder:<Found 0 widgets with text "Dashboard": []>
-   Which: means none were found but one was expected
-
-When the exception was thrown, this was the stack:
-#4      main.<anonymous closure> (file:///C:/Users/61421/trade_tracker/test/app_smoke_test.dart:37:5)
-<asynchronous suspension>
-#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:183:15)
-<asynchronous suspension>
-#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1017:5)<asynchronous suspension>
-<asynchronous suspension>
-(elided one frame from package:stack_trace)
-
-This was caught by the test expectation on the following line:
-  file:///C:/Users/61421/trade_tracker/test/app_smoke_test.dart line 37
-The test description was:
-  Dashboard smoke test
-════════════════════════════════════════════════════════════════════════════════════════════════════
-══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
-The following message was thrown:
-Multiple exceptions (2) were detected during the running of the current test, and at least one was
-unexpected.
-════════════════════════════════════════════════════════════════════════════════════════════════════
-00:02 +0 -4: C:/Users/61421/trade_tracker/test/app_smoke_test.dart: Dashboard smoke test [E] 
-  Test failed. See exception logs above.
-  The test description was: Dashboard smoke test
-
-
-To run this test again: C:\Users\61421\flutter\bin\cache\dart-sdk\bin\dart.exe test C:/Users/61421/trade_tracker/test/app_smoke_test.dart -p vm --plain-name "Dashboard smoke test"       
-00:02 +0 -5: loading C:/Users/61421/trade_tracker/test/filing_detail_screen_test.dart [E]   
-  Failed to load "C:/Users/61421/trade_tracker/test/filing_detail_screen_test.dart": MissingPluginException(No implementation found for method getApplicationDocumentsDirectory on channel plugins.flutter.io/path_provider)
-  package:flutter/src/services/platform_channel.dart 332:7
-     MethodChannel._invokeMethod
-  ===== asynchronous gap ===========================
-  package:path_provider/path_provider.dart 121:24
-     getApplicationDocumentsDirectory
-  ===== asynchronous gap ===========================
-  package:hive_flutter/src/hive_extensions.dart 12:18
-     HiveX.initFlutter
-  ===== asynchronous gap ===========================
-  test\filing_detail_screen_test.dart 11:3
-     main
-  ===== asynchronous gap ===========================
-  ..\AppData\Local\Temp\flutter_tools.6fb4c971\flutter_test_listener.7983cdc1\listener.dart 19:3  _testMain
-
-
-To run this test again: C:\Users\61421\flutter\bin\cache\dart-sdk\bin\dart.exe test C:/Users/61421/trade_tracker/test/filing_detail_screen_test.dart -p vm --plain-name "loading C:/Users/61421/trade_tracker/test/filing_detail_screen_test.dart"
-00:02 +0 -5: C:/Users/61421/trade_tracker/test/dashboard_screen_test.dart: DashboardScreen renders and adds mock filing
-══╡ EXCEPTION CAUGHT BY WIDGETS LIBRARY ╞═══════════════════════════════════════════════════════════
-The following HiveError was thrown building Builder:
-Box "people" not opened. Call openBox<T>() first.
-
-The relevant error-causing widget was:
-  MaterialApp MaterialApp:file:///C:/Users/61421/trade_tracker/test/dashboard_screen_test.dart:45:9
-
-When the exception was thrown, this was the stack:
-#0      HiveService.getBox (package:trade_tracker/services/hive_service.dart:26:7)
-#1      _DashboardScreenState.initState (package:trade_tracker/features/dashboard/dashboard_screen.dart:37:36)
-#2      StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5618:55)     
-#3      ComponentElement.mount (package:flutter/src/widgets/framework.dart:5463:5)
-...     Normal element mounting (228 frames)
-#231    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4340:16)
-#232    MultiChildRenderObjectElement.inflateWidget (package:flutter/src/widgets/framework.dart:6904:36)
-#233    MultiChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:6916:32)
-...     Normal element mounting (457 frames)
-#690    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4340:16)
-#691    Element.updateChild (package:flutter/src/widgets/framework.dart:3843:20)
-#692    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5512:16) 
-#693    Element.rebuild (package:flutter/src/widgets/framework.dart:5203:7)
-#694    ProxyElement.update (package:flutter/src/widgets/framework.dart:5816:5)
-#695    Element.updateChild (package:flutter/src/widgets/framework.dart:3827:15)
-#696    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5512:16) 
-#697    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5650:11)  
-#698    Element.rebuild (package:flutter/src/widgets/framework.dart:5203:7)
-#699    StatefulElement.update (package:flutter/src/widgets/framework.dart:5673:5)
-#700    Element.updateChild (package:flutter/src/widgets/framework.dart:3827:15)
-#701    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5512:16) 
-#702    Element.rebuild (package:flutter/src/widgets/framework.dart:5203:7)
-#703    ProxyElement.update (package:flutter/src/widgets/framework.dart:5816:5)
-#704    Element.updateChild (package:flutter/src/widgets/framework.dart:3827:15)
-#705    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5512:16) 
-#706    Element.rebuild (package:flutter/src/widgets/framework.dart:5203:7)
-#707    ProxyElement.update (package:flutter/src/widgets/framework.dart:5816:5)
-#708    Element.updateChild (package:flutter/src/widgets/framework.dart:3827:15)
-#709    _RawViewElement._updateChild (package:flutter/src/widgets/view.dart:291:16)
-#710    _RawViewElement.update (package:flutter/src/widgets/view.dart:378:5)
-#711    Element.updateChild (package:flutter/src/widgets/framework.dart:3827:15)
-#712    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5512:16) 
-#713    Element.rebuild (package:flutter/src/widgets/framework.dart:5203:7)
-#714    StatelessElement.update (package:flutter/src/widgets/framework.dart:5563:5)
-#715    Element.updateChild (package:flutter/src/widgets/framework.dart:3827:15)
-#716    RootElement._rebuild (package:flutter/src/widgets/binding.dart:1581:16)
-#717    RootElement.update (package:flutter/src/widgets/binding.dart:1559:5)
-#718    RootElement.performRebuild (package:flutter/src/widgets/binding.dart:1573:7)
-#719    Element.rebuild (package:flutter/src/widgets/framework.dart:5203:7)
-#720    BuildOwner.buildScope (package:flutter/src/widgets/framework.dart:2905:19)
-#721    AutomatedTestWidgetsFlutterBinding.drawFrame (package:flutter_test/src/binding.dart:1418:19)
-#722    RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:443:5)
-#723    SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1392:15)
-#724    SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1313:9) 
-#725    AutomatedTestWidgetsFlutterBinding.pump.<anonymous closure> (package:flutter_test/src/binding.dart:1273:9)
-#728    TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:71:41)
-#729    AutomatedTestWidgetsFlutterBinding.pump (package:flutter_test/src/binding.dart:1260:27)
-#730    WidgetTester.pumpWidget.<anonymous closure> (package:flutter_test/src/widget_tester.dart:602:22)
-#733    TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:71:41)
-#734    WidgetTester.pumpWidget (package:flutter_test/src/widget_tester.dart:599:27)
-#735    main.<anonymous closure>.<anonymous closure> (file:///C:/Users/61421/trade_tracker/test/dashboard_screen_test.dart:44:20)
-#736    testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:183:29)
-<asynchronous suspension>
-#737    TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1017:5)<asynchronous suspension>
-<asynchronous suspension>
-(elided 5 frames from dart:async and package:stack_trace)
-
-════════════════════════════════════════════════════════════════════════════════════════════════════
-══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
-The following TestFailure was thrown running a test:
-Expected: exactly one matching candidate
-  Actual: _TextWidgetFinder:<Found 0 widgets with text "Dashboard": []>
-   Which: means none were found but one was expected
-
-When the exception was thrown, this was the stack:
-#4      main.<anonymous closure>.<anonymous closure> (file:///C:/Users/61421/trade_tracker/test/dashboard_screen_test.dart:51:7)
-<asynchronous suspension>
-#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:183:15)
-<asynchronous suspension>
-#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1017:5)<asynchronous suspension>
-<asynchronous suspension>
-(elided one frame from package:stack_trace)
-
-This was caught by the test expectation on the following line:
-  file:///C:/Users/61421/trade_tracker/test/dashboard_screen_test.dart line 51
-The test description was:
-  renders and adds mock filing
-════════════════════════════════════════════════════════════════════════════════════════════════════
-══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
-The following message was thrown:
-Multiple exceptions (2) were detected during the running of the current test, and at least one was
-unexpected.
-════════════════════════════════════════════════════════════════════════════════════════════════════
-00:02 +0 -6: C:/Users/61421/trade_tracker/test/dashboard_screen_test.dart: DashboardScreen renders and adds mock filing [E]
-  Test failed. See exception logs above.
-  The test description was: renders and adds mock filing
-
-
-To run this test again: C:\Users\61421\flutter\bin\cache\dart-sdk\bin\dart.exe test C:/Users/61421/trade_tracker/test/dashboard_screen_test.dart -p vm --plain-name "DashboardScreen renders and adds mock filing"
-00:02 +1 -6: C:/Users/61421/trade_tracker/test/integration_pipeline_test.dart: pipeline: ticker -> CIK -> SEC filings -> Hive -> dashboard
-══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
-The following HiveError was thrown running a test:
-Box not found. Did you forget to call Hive.openBox()?
-
-When the exception was thrown, this was the stack:
-#0      HiveImpl._getBoxInternal (package:hive/src/hive_impl.dart:186:7)
-#1      HiveImpl.box (package:hive/src/hive_impl.dart:197:33)
-#2      CikCacheService._box (package:trade_tracker/services/cik_cache_service.dart:12:32)   
-#3      CikCacheService.getCik (package:trade_tracker/services/cik_cache_service.dart:21:12) 
-#4      CikLookupService.getCikForTicker (package:trade_tracker/services/cik_lookup_service.dart:19:26)
-#5      main.<anonymous closure> (file:///C:/Users/61421/trade_tracker/test/integration_pipeline_test.dart:40:33)
-#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:183:29)
-<asynchronous suspension>
-#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1017:5)<asynchronous suspension>
-<asynchronous suspension>
-(elided one frame from package:stack_trace)
-
-The test description was:
-  pipeline: ticker -> CIK -> SEC filings -> Hive -> dashboard
-════════════════════════════════════════════════════════════════════════════════════════════════════
-00:02 +1 -7: C:/Users/61421/trade_tracker/test/integration_pipeline_test.dart: pipeline: ticker -> CIK -> SEC filings -> Hive -> dashboard [E]
-  Test failed. See exception logs above.
-  The test description was: pipeline: ticker -> CIK -> SEC filings -> Hive -> dashboard      
-
-
-To run this test again: C:\Users\61421\flutter\bin\cache\dart-sdk\bin\dart.exe test C:/Users/61421/trade_tracker/test/integration_pipeline_test.dart -p vm --plain-name "pipeline: ticker 
--> CIK -> SEC filings -> Hive -> dashboard"
-00:03 +1 -8: C:/Users/61421/trade_tracker/test/sec_splash_screen_test.dart: (setUpAll) [E]  
-  PathAccessException: lock failed, path = 'C:\Users\61421\AppData\Local\Temp\people.lock' (OS Error: The process cannot access the file because another process has locked a portion of the file.
-  , errno = 33)
-  dart:io                                                    _RandomAccessFile.lock
-  package:hive/src/backend/vm/storage_backend_vm.dart 81:19  StorageBackendVm.initialize     
-  ===== asynchronous gap ===========================
-  dart:async                                                 _CustomZone.registerUnaryCallback
-  package:hive/src/backend/vm/storage_backend_vm.dart 80:15  StorageBackendVm.initialize     
-  package:hive/src/box/box_base_impl.dart 94:20              BoxBaseImpl.initialize
-  package:hive/src/hive_impl.dart 111:22                     HiveImpl._openBox
-  ===== asynchronous gap ===========================
-  dart:async                                                 _CustomZone.registerUnaryCallback
-  package:hive/src/hive_impl.dart 101:21                     HiveImpl._openBox
-  package:hive/src/hive_impl.dart 142:18                     HiveImpl.openBox
-  test\sec_splash_screen_test.dart 22:16                     main.<fn>
-
-  PathAccessException: lock failed, path = 'C:\Users\61421\AppData\Local\Temp\people.lock' (OS Error: The process cannot access the file because another process has locked a portion of the file.
-  , errno = 33)
-  dart:io                                                    _RandomAccessFile.lock
-  package:hive/src/backend/vm/storage_backend_vm.dart 81:19  StorageBackendVm.initialize     
-  ===== asynchronous gap ===========================
-  dart:async                                                 _CustomZone.registerUnaryCallback
-  package:hive/src/backend/vm/storage_backend_vm.dart 80:15  StorageBackendVm.initialize     
-  package:hive/src/box/box_base_impl.dart 94:20              BoxBaseImpl.initialize
-  package:hive/src/hive_impl.dart 111:22                     HiveImpl._openBox
-  ===== asynchronous gap ===========================
-  dart:async                                                 _CustomZone.registerUnaryCallback
-  package:hive/src/hive_impl.dart 101:21                     HiveImpl._openBox
-  package:hive/src/hive_impl.dart 142:18                     HiveImpl.openBox
-  test\sec_splash_screen_test.dart 22:16                     main.<fn>
-
-
-To run this test again: C:\Users\61421\flutter\bin\cache\dart-sdk\bin\dart.exe test C:/Users/61421/trade_tracker/test/sec_splash_screen_test.dart -p vm --plain-name "(setUpAll)"
-  PathAccessException: Cannot delete file, path = 'C:\Users\61421\AppData\Local\Temp\people.lock' (OS Error: The process cannot access the file because it is being used by another process.
-  , errno = 32)
-  dart:io                                                     FileSystemEntity.delete        
-  package:hive/src/backend/vm/storage_backend_vm.dart 215:21  StorageBackendVm._closeInternal  ===== asynchronous gap ===========================
-  dart:async                                                  _CustomZone.registerUnaryCallback
-  package:hive/src/backend/vm/storage_backend_vm.dart 211:5   StorageBackendVm._closeInternal  package:hive/src/backend/vm/read_write_sync.dart 40:48      ReadWriteSync.syncReadWrite.<fn>.<fn>
-  ===== asynchronous gap ===========================
-  dart:async                                                  Future.then
-  package:hive/src/backend/vm/read_write_sync.dart 40:32      ReadWriteSync.syncReadWrite.<fn>
-  ===== asynchronous gap ===========================
-  dart:async                                                  Future.then
-  package:hive/src/backend/vm/read_write_sync.dart 39:29      ReadWriteSync.syncReadWrite    
-  package:hive/src/backend/vm/storage_backend_vm.dart 220:18  StorageBackendVm.close
-  package:hive/src/box/box_base_impl.dart 173:19              BoxBaseImpl.close
-  ===== asynchronous gap ===========================
-  dart:async                                                  _CustomZone.registerUnaryCallback
-  package:hive/src/box/box_base_impl.dart 170:5               BoxBaseImpl.close
-  package:hive/src/hive_impl.dart 117:17                      HiveImpl._openBox
-  ===== asynchronous gap ===========================
-  dart:async                                                  _CustomZone.registerBinaryCallback
-  package:hive/src/hive_impl.dart 101:21                      HiveImpl._openBox
-  package:hive/src/hive_impl.dart 142:18                      HiveImpl.openBox
-  test\sec_splash_screen_test.dart 22:16                      main.<fn>
-
-00:03 +1 -9: C:/Users/61421/trade_tracker/test/sec_splash_screen_test.dart: (tearDownAll) [E]  HiveError: Box not found. Did you forget to call Hive.openBox()?
-  package:hive/src/hive_impl.dart 186:7   HiveImpl._getBoxInternal
-  package:hive/src/hive_impl.dart 197:33  HiveImpl.box
-  test\sec_splash_screen_test.dart 27:16  main.<fn>
-
-
-To run this test again: C:\Users\61421\flutter\bin\cache\dart-sdk\bin\dart.exe test C:/Users/61421/trade_tracker/test/sec_splash_screen_test.dart -p vm --plain-name "(tearDownAll)"      
-00:03 +1 -9: C:/Users/61421/trade_tracker/test/sec_form4_screen_test.dart: SecForm4Screen renders basic UI
-══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
-The following TestFailure was thrown running a test:
-Expected: exactly one matching candidate
-  Actual: _TextWidgetFinder:<Found 0 widgets with text "Form 4 Filings": []>
-   Which: means none were found but one was expected
-
-When the exception was thrown, this was the stack:
-#4      main.<anonymous closure> (file:///C:/Users/61421/trade_tracker/test/sec_form4_screen_test.dart:41:5)
-<asynchronous suspension>
-#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:183:15)
-<asynchronous suspension>
-#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1017:5)<asynchronous suspension>
-<asynchronous suspension>
-(elided one frame from package:stack_trace)
-
-This was caught by the test expectation on the following line:
-  file:///C:/Users/61421/trade_tracker/test/sec_form4_screen_test.dart line 41
-The test description was:
-  SecForm4Screen renders basic UI
-════════════════════════════════════════════════════════════════════════════════════════════════════
-00:03 +1 -10: C:/Users/61421/trade_tracker/test/sec_form4_screen_test.dart: SecForm4Screen renders basic UI [E]
-  Test failed. See exception logs above.
-  The test description was: SecForm4Screen renders basic UI
-
-
-To run this test again: C:\Users\61421\flutter\bin\cache\dart-sdk\bin\dart.exe test C:/Users/61421/trade_tracker/test/sec_form4_screen_test.dart -p vm --plain-name "SecForm4Screen renders basic UI"
-00:03 +2 -10: Some tests failed.
-PS C:\Users\61421\trade_tracker> 
+[{
+	"resource": "/C:/Users/61421/trade_tracker/lib/models/sec_filing.g.dart",
+	"owner": "_generated_diagnostic_collection_name_#2",
+	"code": {
+		"value": "missing_required_argument",
+		"target": {
+			"$mid": 1,
+			"path": "/diagnostics/missing_required_argument",
+			"scheme": "https",
+			"authority": "dart.dev"
+		}
+	},
+	"severity": 8,
+	"message": "The named parameter 'cik' is required, but there's no corresponding argument.\nTry adding the required argument.",
+	"source": "dart",
+	"startLineNumber": 19,
+	"startColumn": 12,
+	"endLineNumber": 19,
+	"endColumn": 21,
+	"origin": "extHost1"
+},{
+	"resource": "/C:/Users/61421/trade_tracker/lib/screens/sec_form4_screen.dart",
+	"owner": "_generated_diagnostic_collection_name_#2",
+	"code": {
+		"value": "missing_required_argument",
+		"target": {
+			"$mid": 1,
+			"path": "/diagnostics/missing_required_argument",
+			"scheme": "https",
+			"authority": "dart.dev"
+		}
+	},
+	"severity": 8,
+	"message": "The named parameter 'cik' is required, but there's no corresponding argument.\nTry adding the required argument.",
+	"source": "dart",
+	"startLineNumber": 32,
+	"startColumn": 22,
+	"endLineNumber": 32,
+	"endColumn": 37,
+	"origin": "extHost1"
+},{
+	"resource": "/c:/Users/61421/trade_tracker/lib/services/mock_filing_generator.dart",
+	"owner": "_generated_diagnostic_collection_name_#2",
+	"code": {
+		"value": "missing_required_argument",
+		"target": {
+			"$mid": 1,
+			"path": "/diagnostics/missing_required_argument",
+			"scheme": "https",
+			"authority": "dart.dev"
+		}
+	},
+	"severity": 8,
+	"message": "The named parameter 'cik' is required, but there's no corresponding argument.\nTry adding the required argument.",
+	"source": "dart",
+	"startLineNumber": 12,
+	"startColumn": 12,
+	"endLineNumber": 12,
+	"endColumn": 21,
+	"origin": "extHost1"
+},{
+	"resource": "/c:/Users/61421/trade_tracker/lib/services/sec_api_service.dart",
+	"owner": "_generated_diagnostic_collection_name_#2",
+	"code": {
+		"value": "missing_required_argument",
+		"target": {
+			"$mid": 1,
+			"path": "/diagnostics/missing_required_argument",
+			"scheme": "https",
+			"authority": "dart.dev"
+		}
+	},
+	"severity": 8,
+	"message": "The named parameter 'cik' is required, but there's no corresponding argument.\nTry adding the required argument.",
+	"source": "dart",
+	"startLineNumber": 80,
+	"startColumn": 14,
+	"endLineNumber": 80,
+	"endColumn": 29,
+	"origin": "extHost1"
+},{
+	"resource": "/C:/Users/61421/trade_tracker/lib/services/sec_form4_json_service.dart",
+	"owner": "_generated_diagnostic_collection_name_#2",
+	"code": {
+		"value": "missing_required_argument",
+		"target": {
+			"$mid": 1,
+			"path": "/diagnostics/missing_required_argument",
+			"scheme": "https",
+			"authority": "dart.dev"
+		}
+	},
+	"severity": 8,
+	"message": "The named parameter 'cik' is required, but there's no corresponding argument.\nTry adding the required argument.",
+	"source": "dart",
+	"startLineNumber": 26,
+	"startColumn": 16,
+	"endLineNumber": 26,
+	"endColumn": 25,
+	"origin": "extHost1"
+},{
+	"resource": "/C:/Users/61421/trade_tracker/lib/services/sec_form4_rss_service.dart",
+	"owner": "_generated_diagnostic_collection_name_#2",
+	"code": {
+		"value": "missing_required_argument",
+		"target": {
+			"$mid": 1,
+			"path": "/diagnostics/missing_required_argument",
+			"scheme": "https",
+			"authority": "dart.dev"
+		}
+	},
+	"severity": 8,
+	"message": "The named parameter 'cik' is required, but there's no corresponding argument.\nTry adding the required argument.",
+	"source": "dart",
+	"startLineNumber": 37,
+	"startColumn": 14,
+	"endLineNumber": 37,
+	"endColumn": 23,
+	"origin": "extHost1"
+},{
+	"resource": "/C:/Users/61421/trade_tracker/lib/services/sec_form4_service.dart",
+	"owner": "_generated_diagnostic_collection_name_#2",
+	"code": {
+		"value": "missing_required_argument",
+		"target": {
+			"$mid": 1,
+			"path": "/diagnostics/missing_required_argument",
+			"scheme": "https",
+			"authority": "dart.dev"
+		}
+	},
+	"severity": 8,
+	"message": "The named parameter 'cik' is required, but there's no corresponding argument.\nTry adding the required argument.",
+	"source": "dart",
+	"startLineNumber": 37,
+	"startColumn": 21,
+	"endLineNumber": 37,
+	"endColumn": 30,
+	"origin": "extHost1"
+},{
+	"resource": "/C:/Users/61421/trade_tracker/lib/services/sec_form4_service.dart",
+	"owner": "_generated_diagnostic_collection_name_#2",
+	"code": {
+		"value": "missing_required_argument",
+		"target": {
+			"$mid": 1,
+			"path": "/diagnostics/missing_required_argument",
+			"scheme": "https",
+			"authority": "dart.dev"
+		}
+	},
+	"severity": 8,
+	"message": "The named parameter 'cik' is required, but there's no corresponding argument.\nTry adding the required argument.",
+	"source": "dart",
+	"startLineNumber": 93,
+	"startColumn": 14,
+	"endLineNumber": 93,
+	"endColumn": 23,
+	"origin": "extHost1"
+},{
+	"resource": "/c:/Users/61421/trade_tracker/lib/services/sec_service.dart",
+	"owner": "_generated_diagnostic_collection_name_#2",
+	"code": {
+		"value": "missing_required_argument",
+		"target": {
+			"$mid": 1,
+			"path": "/diagnostics/missing_required_argument",
+			"scheme": "https",
+			"authority": "dart.dev"
+		}
+	},
+	"severity": 8,
+	"message": "The named parameter 'cik' is required, but there's no corresponding argument.\nTry adding the required argument.",
+	"source": "dart",
+	"startLineNumber": 23,
+	"startColumn": 18,
+	"endLineNumber": 23,
+	"endColumn": 27,
+	"origin": "extHost1"
+},{
+	"resource": "/c:/Users/61421/trade_tracker/test/app_smoke_test.dart",
+	"owner": "_generated_diagnostic_collection_name_#2",
+	"code": {
+		"value": "missing_required_argument",
+		"target": {
+			"$mid": 1,
+			"path": "/diagnostics/missing_required_argument",
+			"scheme": "https",
+			"authority": "dart.dev"
+		}
+	},
+	"severity": 8,
+	"message": "The named parameter 'cik' is required, but there's no corresponding argument.\nTry adding the required argument.",
+	"source": "dart",
+	"startLineNumber": 40,
+	"startColumn": 22,
+	"endLineNumber": 40,
+	"endColumn": 37,
+	"origin": "extHost1"
+},{
+	"resource": "/c:/Users/61421/trade_tracker/test/dashboard_screen_test.dart",
+	"owner": "_generated_diagnostic_collection_name_#2",
+	"code": {
+		"value": "missing_required_argument",
+		"target": {
+			"$mid": 1,
+			"path": "/diagnostics/missing_required_argument",
+			"scheme": "https",
+			"authority": "dart.dev"
+		}
+	},
+	"severity": 8,
+	"message": "The named parameter 'cik' is required, but there's no corresponding argument.\nTry adding the required argument.",
+	"source": "dart",
+	"startLineNumber": 56,
+	"startColumn": 9,
+	"endLineNumber": 56,
+	"endColumn": 18,
+	"origin": "extHost1"
+},{
+	"resource": "/c:/Users/61421/trade_tracker/test/dashboard_screen_test.dart",
+	"owner": "_generated_diagnostic_collection_name_#2",
+	"code": {
+		"value": "missing_required_argument",
+		"target": {
+			"$mid": 1,
+			"path": "/diagnostics/missing_required_argument",
+			"scheme": "https",
+			"authority": "dart.dev"
+		}
+	},
+	"severity": 8,
+	"message": "The named parameter 'cik' is required, but there's no corresponding argument.\nTry adding the required argument.",
+	"source": "dart",
+	"startLineNumber": 80,
+	"startColumn": 9,
+	"endLineNumber": 80,
+	"endColumn": 18,
+	"origin": "extHost1"
+},{
+	"resource": "/c:/Users/61421/trade_tracker/test/dashboard_screen_test.dart",
+	"owner": "_generated_diagnostic_collection_name_#2",
+	"code": {
+		"value": "missing_required_argument",
+		"target": {
+			"$mid": 1,
+			"path": "/diagnostics/missing_required_argument",
+			"scheme": "https",
+			"authority": "dart.dev"
+		}
+	},
+	"severity": 8,
+	"message": "The named parameter 'cik' is required, but there's no corresponding argument.\nTry adding the required argument.",
+	"source": "dart",
+	"startLineNumber": 93,
+	"startColumn": 9,
+	"endLineNumber": 93,
+	"endColumn": 18,
+	"origin": "extHost1"
+},{
+	"resource": "/c:/Users/61421/trade_tracker/test/dashboard_screen_test.dart",
+	"owner": "_generated_diagnostic_collection_name_#2",
+	"code": {
+		"value": "missing_required_argument",
+		"target": {
+			"$mid": 1,
+			"path": "/diagnostics/missing_required_argument",
+			"scheme": "https",
+			"authority": "dart.dev"
+		}
+	},
+	"severity": 8,
+	"message": "The named parameter 'cik' is required, but there's no corresponding argument.\nTry adding the required argument.",
+	"source": "dart",
+	"startLineNumber": 130,
+	"startColumn": 9,
+	"endLineNumber": 130,
+	"endColumn": 18,
+	"origin": "extHost1"
+},{
+	"resource": "/c:/Users/61421/trade_tracker/test/filing_detail_screen_test.dart",
+	"owner": "_generated_diagnostic_collection_name_#2",
+	"code": {
+		"value": "missing_required_argument",
+		"target": {
+			"$mid": 1,
+			"path": "/diagnostics/missing_required_argument",
+			"scheme": "https",
+			"authority": "dart.dev"
+		}
+	},
+	"severity": 8,
+	"message": "The named parameter 'cik' is required, but there's no corresponding argument.\nTry adding the required argument.",
+	"source": "dart",
+	"startLineNumber": 46,
+	"startColumn": 22,
+	"endLineNumber": 46,
+	"endColumn": 37,
+	"origin": "extHost1"
+},{
+	"resource": "/c:/Users/61421/trade_tracker/test/filings_list_screen_test.dart",
+	"owner": "_generated_diagnostic_collection_name_#2",
+	"code": {
+		"value": "missing_required_argument",
+		"target": {
+			"$mid": 1,
+			"path": "/diagnostics/missing_required_argument",
+			"scheme": "https",
+			"authority": "dart.dev"
+		}
+	},
+	"severity": 8,
+	"message": "The named parameter 'cik' is required, but there's no corresponding argument.\nTry adding the required argument.",
+	"source": "dart",
+	"startLineNumber": 46,
+	"startColumn": 9,
+	"endLineNumber": 46,
+	"endColumn": 18,
+	"origin": "extHost1"
+},{
+	"resource": "/c:/Users/61421/trade_tracker/test/filings_list_screen_test.dart",
+	"owner": "_generated_diagnostic_collection_name_#2",
+	"code": {
+		"value": "missing_required_argument",
+		"target": {
+			"$mid": 1,
+			"path": "/diagnostics/missing_required_argument",
+			"scheme": "https",
+			"authority": "dart.dev"
+		}
+	},
+	"severity": 8,
+	"message": "The named parameter 'cik' is required, but there's no corresponding argument.\nTry adding the required argument.",
+	"source": "dart",
+	"startLineNumber": 59,
+	"startColumn": 9,
+	"endLineNumber": 59,
+	"endColumn": 18,
+	"origin": "extHost1"
+},{
+	"resource": "/c:/Users/61421/trade_tracker/test/hive_mock.dart",
+	"owner": "_generated_diagnostic_collection_name_#2",
+	"code": {
+		"value": "missing_required_argument",
+		"target": {
+			"$mid": 1,
+			"path": "/diagnostics/missing_required_argument",
+			"scheme": "https",
+			"authority": "dart.dev"
+		}
+	},
+	"severity": 8,
+	"message": "The named parameter 'cik' is required, but there's no corresponding argument.\nTry adding the required argument.",
+	"source": "dart",
+	"startLineNumber": 16,
+	"startColumn": 27,
+	"endLineNumber": 16,
+	"endColumn": 36,
+	"origin": "extHost1"
+},{
+	"resource": "/c:/Users/61421/trade_tracker/test/hive_smoke_test.dart",
+	"owner": "_generated_diagnostic_collection_name_#2",
+	"code": {
+		"value": "missing_required_argument",
+		"target": {
+			"$mid": 1,
+			"path": "/diagnostics/missing_required_argument",
+			"scheme": "https",
+			"authority": "dart.dev"
+		}
+	},
+	"severity": 8,
+	"message": "The named parameter 'cik' is required, but there's no corresponding argument.\nTry adding the required argument.",
+	"source": "dart",
+	"startLineNumber": 19,
+	"startColumn": 22,
+	"endLineNumber": 19,
+	"endColumn": 31,
+	"origin": "extHost1"
+}]

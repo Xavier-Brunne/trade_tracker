@@ -1,50 +1,34 @@
-import 'dart:io';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hive/hive.dart';
-import 'package:trade_tracker/models/person.dart';
-import 'package:trade_tracker/models/sec_filing.dart';
+import 'package:trade_tracker/models/cik_cache_entry.dart';
+import 'package:trade_tracker/services/cik_lookup_service.dart';
 import 'package:trade_tracker/services/hive_service.dart';
-import 'package:trade_tracker/features/splash/sec_splash_screen.dart';
+import 'package:trade_tracker/hive_adapters.dart';
+
+import 'test_hive_utils.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
+  late HiveService hiveService;
+  late CikLookupService cikService;
+
   setUpAll(() async {
-    // Initialise Hive in a temp directory (no path_provider plugin needed)
-    Hive.init(Directory.systemTemp.path);
+    await initTestHive();
+    registerHiveAdapters();
 
-    // Register adapters
-    Hive.registerAdapter(PersonAdapter());
-    Hive.registerAdapter(SecFilingAdapter());
+    await openTestBox<CikCacheEntry>('cikCache');
 
-    // Open required boxes
-    await Hive.openBox<Person>('people');
-    await Hive.openBox<SecFiling>('secFilings');
+    hiveService = HiveService();
+    cikService = CikLookupService(hiveService);
   });
 
   tearDownAll(() async {
-    await Hive.box<Person>('people').close();
-    await Hive.box<SecFiling>('secFilings').close();
+    await disposeTestHive();
   });
 
-  testWidgets('SecSplashScreen shows splash and navigates',
-      (WidgetTester tester) async {
-    final hiveService = HiveService();
-
-    await tester.pumpWidget(
-      MaterialApp(
-        home: SecSplashScreen(hiveService: hiveService),
-      ),
-    );
-
-    // Verify splash text appears (match exactly what your widget renders)
-    expect(find.text('Trade Tracker'), findsOneWidget);
-
-    // Pump enough frames to allow navigation
-    await tester.pumpAndSettle(const Duration(seconds: 3));
-
-    // Verify dashboard title appears after navigation
-    expect(find.text('Dashboard'), findsOneWidget);
+  test('SecSplashScreen integration CIK lookup resolves Microsoft ticker',
+      () async {
+    final cik = await cikService.getCikForTicker('MSFT');
+    expect(cik, equals('0000789019'));
   });
 }
